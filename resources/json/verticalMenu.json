@@ -1,0 +1,57 @@
+{
+  "menu":
+  [
+    {"url":"", "name":"Dashboard", "slug":"/", "badgeClass": "badge badge-warning badge-pill float-right mr-2", "icon":"feather icon-home"},
+    {"url":"", "name":"User", "icon":"feather icon-users",
+      "submenu": [
+        {"url":"/users/create", "name":"New", "icon":"feather icon-plus", "i18n":"nav.create_user"},
+        {"url":"/users", "name":"List", "icon":"feather icon-circle", "i18n":"nav.users"}
+      ]
+    },
+
+    {"url":"","navheader":"Settings","icon":""},
+    {"url":"", "name":"Role", "icon":"feather icon-unlock",
+      "submenu": [
+        {"url":"/roles/create", "name":"New", "icon":"feather icon-plus", "i18n":"nav.create_role"},
+        {"url":"/roles", "name":"List", "icon":"feather icon-circle", "i18n":"nav.roles"}
+      ]
+    },
+    {"url":"", "name":"Religion", "icon":"feather icon-book",
+      "submenu": [
+        {"url":"/religions/create", "name":"New", "icon":"feather icon-plus", "i18n":"nav.create_religion"},
+        {"url":"/religions", "name":"List", "icon":"feather icon-circle", "i18n":"nav.religions"}
+      ]
+    },
+    {"url":"", "name":"Blood Group", "icon":"feather icon-book",
+      "submenu": [
+        {"url":"/blood_groups/create", "name":"New", "icon":"feather icon-plus", "i18n":"nav.create_blood_group"},
+        {"url":"/blood_groups", "name":"List", "icon":"feather icon-circle", "i18n":"nav.blood_groups"}
+      ]
+    },
+    {"url":"", "name":"Gender", "icon":"feather icon-book",
+      "submenu": [
+        {"url":"/genders/create", "name":"New", "icon":"feather icon-plus", "i18n":"nav.create_gender"},
+        {"url":"/genders", "name":"List", "icon":"feather icon-circle", "i18n":"nav.genders"}
+      ]
+    },
+    {"url":"", "name":"Division", "icon":"feather icon-book",
+      "submenu": [
+        {"url":"/settings/divisions/create", "name":"New", "icon":"feather icon-plus", "i18n":"nav.create_division"},
+        {"url":"/settings/divisions", "name":"List", "icon":"feather icon-circle", "i18n":"nav.divisions"}
+      ]
+    },
+    {"url":"", "name":"District", "icon":"feather icon-book",
+      "submenu": [
+        {"url":"/settings/districts/create", "name":"New", "icon":"feather icon-plus", "i18n":"nav.create_district"},
+        {"url":"/settings/districts", "name":"List", "icon":"feather icon-circle", "i18n":"nav.districts"}
+      ]
+    },
+    {"url":"", "name":"Upazilla", "icon":"feather icon-book",
+      "submenu": [
+        {"url":"/settings/upazillas/create", "name":"New", "icon":"feather icon-plus", "i18n":"nav.create_upazilla"},
+        {"url":"/settings/upazillas", "name":"List", "icon":"feather icon-circle", "i18n":"nav.upazillas"}
+      ]
+    }
+  ]
+}
+

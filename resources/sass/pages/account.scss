@@ -1,0 +1,15 @@
+.account-profile {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.account-profile img {
+    width: 40% !important;
+}
+.account-trans-btn {
+    display: flex;
+}
+.account-trans-btn .btn{
+    align-self: center;
+    font-size: 20px;
+}
