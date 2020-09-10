@@ -6,8 +6,6 @@ use App\Account;
 use App\Settings\TransactionType;
 use App\Transaction;
 use App\User;
-use Illuminate\Support\Facades\Auth;
-use Nexmo\Laravel\Facade\Nexmo;
 
 class TransactionObserver
 {
