@@ -33,6 +33,7 @@
                   <tr>
                     <th scope="col">S.N.</th>
                     <th>Name</th>
+                    <th>Members</th>
                     <th>Type</th>
                     <th>Money Format</th>
                     <th>Date</th>
@@ -71,10 +72,11 @@
           columns: [
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
+            { data: 'members', name: 'users.name', orderable: false },
             { data: 'account_type.name', name: 'account_type_id' },
             { data: 'money_format.name', name: 'money_format_id' },
             { data: 'last_updated', name: 'updated_at' },
-            { data: 'status', name: 'status', searchable: false , searchable: false},
+            { data: 'status', name: 'status', orderable: false , searchable: false},
             { data: 'action', name: 'action', orderable: false, searchable: false}
           ]
         });

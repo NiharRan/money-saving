@@ -20,31 +20,32 @@ class TransactionRepository
     ])->orderBy('name', 'asc');
   }
 
-  public function transactionDataInTable()
+  public function transactionsDataInTable()
   {
     try {
       return DataTables::of($this->all()->get())
-        ->addColumn('status', function ($transaction) {
-          $statusClass = $transaction->status == 1 ? 'icon-eye text-success' : 'icon-eye-off text-danger';
-          return "<span class='m-auto'><i class='feather $statusClass'></i></span>";
+        ->addColumn('invoice', function ($transaction) {
+          $subStr = strtoupper(substr($transaction->user->name, 0, 3));
+          $invoice = $subStr . '-' . sprintf("%'.03d\n", $transaction->invoice);
+          return '<p class="text-center"><strong>'.$invoice.'</strong></p>';
         })
-        ->addColumn('action', function ($transaction) {
-          return '<a href="' . route('account-types.edit', $transaction->id) . '" class="action-edit"><i class="feather icon-edit"></i></a>
-                    <form class="display-inline-block" id="destroy_form" action="' . route('api.account-types.destroy', $transaction->id) . '" method="post" onsubmit="return confirm(\'Are you sure?\')">
-                      <input type="hidden" name="_token" value="' . csrf_token() . '">
-                      <input type="hidden" name="_method" value="DELETE">
-                      <button class="normal-link" type="submit"><i class="feather icon-trash-2"></i></button>
-                    </form>';
+        ->addColumn('amount', function ($transaction) {
+          return '<p class="text-right"><strong>'.$transaction->amount.'</strong></p>';
+        })
+        ->addColumn('status', function ($transaction) {
+          $statusClass = $transaction->status == 1 ? 'icon-check-square text-success' : 'icon-x text-danger';
+          return "<p class='text-center'><span class='m-auto'><i class='feather $statusClass'></i></span></p>";
         })
         ->rawColumns([
-          'name',
+          'invoice',
+          'amount',
           'status',
-          'action'
         ])->make(true);
     } catch (\Exception $e) {
       return $e->getMessage();
     }
   }
+
 
   public function userTransactionsDataInTable(int $userId)
   {

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'lang'])->group(function () {
   // Route url
   Route::get('/', 'DashboardController@index');
 
@@ -63,5 +63,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('accounts', 'AccountController')->except(['create', 'edit']);
     Route::get('accounts/{accountId}/transactions', 'AccountTransactionController@index')->name('accounts.transactions.index');
     Route::post('accounts/transactions', 'AccountTransactionController@store')->name('accounts.transactions.store');
+
+
+    Route::get('/transactions', 'TransactionController@index')->name('transactions.index');
   });
 });

@@ -19,7 +19,7 @@
       <li class="nav-item">
         <a href="/">
           <i class="feather icon-home"></i>
-          <span class="menu-title" data-i18n="">Dashboard</span>
+          <span class="menu-title" data-i18n="">{{ __('Dashboard') }}</span>
         </a>
       </li>
 
@@ -38,7 +38,7 @@
         </li>
       @endif
 
-      
+
       @if (auth()->user()->is_subscriber)
         <li class="nav-item has-sub">
           <a href="">
@@ -61,7 +61,7 @@
           </ul>
         </li>
       @endif
-      
+
       @if(auth()->user()->is_admin)
         <li class="nav-item has-sub">
           <a href="">

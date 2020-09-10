@@ -58,6 +58,17 @@ class AccountRepository
                     </div>
                   </div>';
         })
+        ->addColumn('members', function ($account) {
+          $users = $account->users;
+          $output = '<ul class="list-unstyled users-list m-0  d-flex align-items-center">';
+          foreach ($users as $user) {
+            $output .= '<li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="'. $user->name .'" class="avatar pull-up">
+                        <img class="media-object rounded-circle" src="'. $user->smallAvatar .'" alt="Avatar" height="30" width="30">
+                      </li>';
+          }
+          $output .= '</ul>';
+          return $output;
+        })
         ->addColumn('status', function ($account) {
           $statusClass = $account->status == 1 ? 'icon-eye text-success' : 'icon-eye-off text-danger';
           return "<span class='m-auto'><i class='feather $statusClass'></i></span>";
@@ -72,6 +83,7 @@ class AccountRepository
         })
         ->rawColumns([
           'name',
+          'members',
           'status',
           'action'
         ])->make(true);
