@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('mother_name')->nullable();
             $table->string('avatar')->nullable()->default('default.jpg');
             $table->string('phone')->unique();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->nullable()->unique();
             $table->unsignedBigInteger('gender_id')->nullable();
             $table->date('birth_date')->nullable();
             $table->unsignedBigInteger('blood_group_id')->nullable();

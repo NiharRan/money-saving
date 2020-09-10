@@ -145,8 +145,12 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  if ($(".select2")) {
-      $(".select2").select2();
-  }
+  <script>
+    $(function () {
+      if ($(".select2")) {
+        $(".select2").select2();
+      }
+    });
+  </script>
   <script src="{{ asset('js/scripts/pages/account.js') }}"></script>
 @endsection

@@ -16,6 +16,24 @@ class UserProfileController extends Controller
     public function show(string $slug)
     {
       $user = $this->userRepository->findBySlug($slug);
-      dd($user);
+      $transactionTypes = $this->userRepository->transactionAmountByType($user);
+      $accounts = $user->accounts;
+      foreach ($accounts as $key => $account) {
+        $accounts[$key]->transactionTypes = $this->userRepository->transactionAmountByType($user, $account);
+      }
+      $pageConfigs = [
+        'pageHeader' => true
+      ];
+      $breadcrumbs = [
+        ['link'=>"/",'name'=>"Home"],
+        ['name'=> $user->name],
+      ];
+    return view('/pages/users/profile', [
+        'breadcrumbs' => $breadcrumbs
+      ])->with([
+        'user' => $user,
+        'transactionTypes' => $transactionTypes,
+        'accounts' => $accounts
+      ]);
     }
 }

@@ -1,0 +1,19 @@
+.user-profile {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-profile img {
+  width: 40% !important;
+}
+
+.user-trans-btn {
+  display: flex;
+}
+
+.user-trans-btn .btn {
+  align-self: center;
+  font-size: 20px;
+}
+

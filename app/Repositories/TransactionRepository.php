@@ -46,6 +46,32 @@ class TransactionRepository
     }
   }
 
+  public function userTransactionsDataInTable(int $userId)
+  {
+    try {
+      return DataTables::of($this->findByUser($userId))
+        ->addColumn('invoice', function ($transaction) {
+          $subStr = strtoupper(substr($transaction->user->name, 0, 3));
+          $invoice = $subStr . '-' . sprintf("%'.03d\n", $transaction->invoice);
+          return '<p class="text-center"><strong>'.$invoice.'</strong></p>';
+        })
+        ->addColumn('amount', function ($transaction) {
+          return '<p class="text-right"><strong>'.$transaction->amount.'</strong></p>';
+        })
+        ->addColumn('status', function ($transaction) {
+          $statusClass = $transaction->status == 1 ? 'icon-check-square text-success' : 'icon-x text-danger';
+          return "<p class='text-center'><span class='m-auto'><i class='feather $statusClass'></i></span></p>";
+        })
+        ->rawColumns([
+          'invoice',
+          'amount',
+          'status',
+        ])->make(true);
+    } catch (\Exception $e) {
+      return $e->getMessage();
+    }
+  }
+
   public function accountTransactionsDataInTable($accountId)
   {
       try {
@@ -78,6 +104,14 @@ class TransactionRepository
         'user',
         'transaction_type',
     ])->where('account_id', $accountId)->get();
+  }
+
+  private function findByUser(int $userId)
+  {
+    return Transaction::with([
+      'account',
+      'transaction_type',
+    ])->where('user_id', $userId)->get();
   }
 
   public function findById($transactionId)

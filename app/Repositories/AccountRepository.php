@@ -2,7 +2,9 @@
 namespace App\Repositories;
 
 use App\Account;
+use App\Settings\TransactionType;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
@@ -126,4 +128,20 @@ class AccountRepository
     });
     $img->save($path);
   }
+
+    public function transactionsByType(Account $account, $user_id=null)
+    {
+      $transactionTypes = TransactionType::active()->orderBy('name', 'asc')->get();
+      foreach ($transactionTypes as $key => $transactionType) {
+        $query = DB::table('transactions')
+          ->where('account_id', '=', $account->id)
+          ->where('created_at', '>=', $account->created_at)
+          ->where('transaction_type_id', '=', $transactionType->id);
+        if ($user_id !==  null) {
+          $query = $query->where('user_id', '=', $user_id);
+        }
+        $transactionTypes[$key]->amount = $query->sum('amount');
+      }
+      return $transactionTypes;
+    }
 }

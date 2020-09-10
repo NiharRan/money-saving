@@ -27,10 +27,12 @@ Route::middleware(['auth'])->group(function () {
   Route::resource('users', 'UserController')->only(['index', 'create', 'edit']);
   Route::resource('accounts', 'AccountController')->only(['index', 'create', 'edit']);
   Route::get('/{slug}', 'UserProfileController@show')->name('users.profile');
+  Route::get('/{slug}/transactions', 'UserTransactionController@create')->name('users.transactions.create');
+
   Route::get('/accounts/{slug}', 'AccountProfileController@show')->name('accounts.profile');
   Route::get('/accounts/{accountId}/transactions', 'AccountTransactionController@create')->name('accounts.transactions.create');
 
-  
+
   Route::group([
     'prefix' => 'settings',
     'namespace' => 'Settings',
@@ -40,21 +42,24 @@ Route::middleware(['auth'])->group(function () {
       Route::resource('money-formats', 'MoneyFormatController');
       Route::resource('roles', 'RoleController');
   });
-  
-  
+
+
 
   Route::group([
     'prefix' => 'api',
     'namespace' => 'API',
     'as' => 'api.'
-  ],function () 
+  ],function ()
   {
     Route::resource('roles', 'Settings\RoleController')->except(['create', 'edit']);
     Route::resource('account-types', 'Settings\AccountTypeController')->except(['create', 'edit']);
     Route::resource('transaction-types', 'Settings\TransactionTypeController')->except(['create', 'edit']);
     Route::resource('money-formats', 'Settings\MoneyFormatController')->except(['create', 'edit']);
-    
+
     Route::resource('users', 'UserController')->except(['create', 'edit']);
+    Route::get('users/{userId}/transactions', 'UserTransactionController@index')->name('users.transactions.index');
+    Route::post('users/transactions', 'UserTransactionController@store')->name('users.transactions.store');
+
     Route::resource('accounts', 'AccountController')->except(['create', 'edit']);
     Route::get('accounts/{accountId}/transactions', 'AccountTransactionController@index')->name('accounts.transactions.index');
     Route::post('accounts/transactions', 'AccountTransactionController@store')->name('accounts.transactions.store');

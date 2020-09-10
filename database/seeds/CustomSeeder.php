@@ -96,7 +96,7 @@ class CustomSeeder extends Seeder
         ]);
       }
 
-      $accountTypes = ['Single', 'Joining'];
+      $accountTypes = ['Single', 'Join'];
       foreach ($accountTypes as $accountType) {
         DB::table('account_types')->insert([
           'name' => $accountType,

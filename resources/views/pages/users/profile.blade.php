@@ -1,202 +1,153 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'View Book Page')
+@section('title', $user->name)
 
 @section('page-style')
+
+@section('vendor-style')
+  {{-- Page js files --}}
+  <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/datatables.min.css')) }}">
+@endsection
 {{-- Page Css files --}}
-<link rel="stylesheet" href="{{ asset(mix('css/pages/app-user.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('css/pages/user.css')) }}">
 @endsection
 
 @section('content')
-<!-- page users view start -->
-<section class="page-users-view">
-  <div class="row">
-    <!-- account start -->
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="card-title">Account</div>
-          <div class="row">
-            <div class="col-2 users-view-image">
-              <img src="{{ $user->studentAvatarMedium }}" class="w-100 rounded mb-2"
-                   alt="avatar">
-              <!-- height="150" width="150" -->
-            </div>
-            <div class="col-sm-6 col-12">
-              <table>
-                <tr>
-                  <td class="font-weight-bold">Name</td>
-                  <td>{{ $user->name }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-bold">Email</td>
-                  <td>{{ $user->email }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-bold">Gender</td>
-                  <td>{{ $user->gender->name }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-bold">Blood Group</td>
-                  <td>{{ $user->blood_group->name }}</td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-md-4 col-12">
-              <table class="ml-auto">
-                <tr>
-                  <td class="font-weight-bold">Status</td>
-                  <td>{{ $user->currentStatus }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-bold">Role</td>
-                  <td>{{ $user->role->name }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-bold">Religion</td>
-                  <td>{{ $user->religion->name }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-bold">Birth Date</td>
-                  <td>{{ $user->birth_date }}</td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-12">
-              @if(auth()->user()->id == $user->id)
-                <a href="{{ route('users.profile') }}" class="btn btn-primary mr-1"><i class="feather icon-edit-1"></i> Edit</a>
-              @endif
+  <!-- page users view start -->
+  <section class="page-users-view">
+    <div class="row">
+      <!-- account info start -->
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 col-md-3 user-profile border-right">
+                <img src="{{ $user->avatarMedium }}" class="w-100 rounded mb-2"
+                     alt="avatar">
+                <h3>{{ $user->name }}</h3>
+                <p class="mb-0">{{ $user->phone }}</p>
+              </div>
+              <div class="col-md-6 col-12">
+                <table class="table table-bordered">
+                  @if(count($transactionTypes) > 0)
+                    @foreach($transactionTypes as $transactionType)
+                      <tr>
+                        <td class="font-weight-bold">{{ $transactionType->name }}</td>
+                        <td>{{ $transactionType->amount }}</td>
+                      </tr>
+                    @endforeach
+                  @endif
+                </table>
+              </div>
+              <div class="col-md-3 col-12 user-trans-btn">
+                <a href="{{ route('users.transactions.create', $user->id) }}" class="btn btn-primary"><i class="feather icon-plus"></i> Transaction</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- account end -->
-    <!-- information start -->
-    <div class="col-md-6 col-12 ">
-      <div class="card">
-        <div class="card-body">
-          <div class="card-title mb-2">Address</div>
-          @if($user->address)
-            <table class="table">
-              <tr>
-                <td class="font-weight-bold">Village/House No./Road </td>
-                <td>{{ $user->address->address }}
-                </td>
-              </tr>
-              <tr>
-                <td class="font-weight-bold">Upazilla</td>
-                <td>
-                  @if($user->address->upazilla)
-                    {{ $user->address->upazilla->name }}
-                  @endif
-                </td>
-              </tr>
-              <tr>
-                <td class="font-weight-bold">District</td>
-                <td>
-                  @if($user->address->district)
-                    {{ $user->address->district->name }}
-                  @endif
-                </td>
-              </tr>
-              <tr>
-                <td class="font-weight-bold">Division</td>
-                <td>
-                  @if($user->address->division)
-                    {{ $user->address->division->name }}
-                  @endif
-                </td>
-              </tr>
-            </table>
+      <!-- account info end -->
+
+      <!-- account member info start -->
+      <div class="col-12">
+        <div class="row match-height">
+          @if(count($accounts) > 0)
+            @foreach($accounts as $account)
+              <div class="col-12 col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-12 col-md-6 account-profile border-right">
+                        <img src="{{ $account->logoMedium }}" class="w-100 rounded mb-2"
+                             alt="avatar">
+                        <h3>{{ $account->name }}</h3>
+                        <p class="mb-0">{{ $account->slugan }}</p>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <table class="table table-bordered">
+                          @if(count($account->transactionTypes) > 0)
+                            @foreach($account->transactionTypes as $transactionType)
+                              <tr>
+                                <td class="font-weight-bold">{{ $transactionType->name }}</td>
+                                <td>{{ $transactionType->amount }}</td>
+                              </tr>
+                            @endforeach
+                          @endif
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            @endforeach
           @endif
         </div>
       </div>
-    </div>
-    <!-- information start -->
-    <!-- department info start -->
-    @if($user->isStudent)
-      <div class="col-md-6 col-12 ">
+      <!-- account member info end -->
+
+      <!-- account transaction start -->
+      <div class="col-12">
         <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Transactions</h3>
+          </div>
           <div class="card-body">
-            <div class="card-title mb-2">Department Info</div>
-            <table class="table">
-              <tr>
-                <td class="font-weight-bold">Department </td>
-                @if($user->department)
-                  <td>
-                    {{ $user->department->name }} ({{ $user->department->short }})
-                  </td>
-                @endif
-
-              </tr>
-              <tr>
-                <td class="font-weight-bold">Batch</td>
-                <td>
-                  @if($user->batch)
-                    {{ $user->batch->name }}
-                  @endif
-                </td>
-              </tr>
-              <tr>
-                <td class="font-weight-bold">Section</td>
-                <td>
-                  @if($user->section)
-                    {{ $user->section->name }}
-                  @endif
-                </td>
-              </tr>
-            </table>
+            <div class="table-responsive">
+              <table id="data-table" class="table table-bordered display responsive nowrap mb-0" style="width: 100%">
+                <thead>
+                <tr>
+                  <th scope="col">S.N.</th>
+                  <th class="text-center">Invoice</th>
+                  <th>Account</th>
+                  <th>Transaction Type</th>
+                  <th class="text-right">Amount</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Date</th>
+                </tr>
+                </thead>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    @endif
-    <!-- department info end -->
-    <!-- permissions start -->
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="table-responsive">
-
-            @if(count($user->educations) > 0)
-              @foreach($user->educations as $education)
-                <div class="border rounded my-2">
-                  <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i class="fa fa-address-card-o mr-50 "></i>{{ $education->degree->name }}
-                  </h6>
-                  <table class="table table-borderless">
-                    <thead>
-                    <tr>
-                      <th>Department</th>
-                      <th>Institute</th>
-                      <th>Result</th>
-                      <th>Passing Year</th>
-                      <th>Board</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                      <th>{{ $education->group->name }}</th>
-                      <td>{{ $education->institute }}</td>
-                      <td>{{ $education->result }}</td>
-                      <td>{{ $education->passing_year }}</td>
-                      <th>{{ $education->board->name }}</th>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              @endforeach
-            @endif
-          </div>
-        </div>
-      </div>
+      <!-- account transaction end -->
+      <input type="hidden" id="url" value="{{ route('api.users.transactions.index', $user->id) }}" />
     </div>
-    <!-- permissions end -->
-  </div>
-</section>
-<!-- page users view end -->
+  </section>
+  <!-- page users view end -->
+@endsection
+
+@section('vendor-script')
+  {{-- Page js files --}}
+
+  <script src="{{ asset(mix('vendors/js/tables/datatable/vfs_fonts.js')) }}"></script>
+  <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
+  <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.bootstrap4.min.js')) }}"></script>
 @endsection
 
 @section('page-script')
-{{-- Page js files --}}
-<script src="{{ asset('js/scripts/pages/app-user.js') }}"></script>
+  {{-- Page js files --}}
+  <script src="{{ asset('js/scripts/pages/user.js') }}"></script>
+  <script>
+    $(function () {
+      const url = $("#url").val();
+      if ($("#data-table")) {
+        $('#data-table').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax: url,
+          columns: [
+            { data: 'id', name: 'id' },
+            { data: 'invoice', name: 'invoice' },
+            { data: 'account.name', name: 'account_id' },
+            { data: 'transaction_type.name', name: 'transaction_type_id' },
+            { data: 'amount', name: 'amount' },
+            { data: 'status', name: 'status', searchable: false , searchable: false},
+            { data: 'created_at', name: 'created_at' },
+          ]
+        });
+      }
+    });
+  </script>
 @endsection
+

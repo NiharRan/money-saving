@@ -29,18 +29,14 @@
             </div>
             <div class="col-md-6 col-12">
               <table class="table table-bordered">
-                <tr>
-                  <td class="font-weight-bold">Cash In</td>
-                  <td>{{ $account->name }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-bold">Cash Out</td>
-                  <td>{{ $account->name }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-bold">Balance</td>
-                  <td>{{ $account->name }}</td>
-                </tr>
+                @if(count($transactionTypes) > 0)
+                  @foreach($transactionTypes as $transactionType)
+                    <tr>
+                      <td class="font-weight-bold">{{ $transactionType->name }}</td>
+                      <td>{{ $transactionType->amount }}</td>
+                    </tr>
+                  @endforeach
+                @endif
               </table>
             </div>
             <div class="col-md-3 col-12 account-trans-btn">
@@ -51,6 +47,43 @@
       </div>
     </div>
     <!-- account info end -->
+
+    <!-- account member info start -->
+    <div class="col-12">
+      <div class="row">
+        @if(count($users) > 0)
+          @foreach($users as $user)
+            <div class="col-12 col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 col-md-6 account-profile border-right">
+                      <img src="{{ $user->avatarMedium }}" class="w-100 rounded mb-2"
+                           alt="avatar">
+                      <h3>{{ $user->name }}</h3>
+                      <p class="mb-0">{{ $user->phone }}</p>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <table class="table table-bordered">
+                        @if(count($user->transactionTypes) > 0)
+                          @foreach($user->transactionTypes as $transactionType)
+                            <tr>
+                              <td class="font-weight-bold">{{ $transactionType->name }}</td>
+                              <td>{{ $transactionType->amount }}</td>
+                            </tr>
+                          @endforeach
+                        @endif
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        @endif
+      </div>
+    </div>
+    <!-- account member info end -->
 
     <!-- account transaction start -->
     <div class="col-12">
