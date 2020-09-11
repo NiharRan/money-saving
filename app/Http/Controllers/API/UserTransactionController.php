@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TransactionCreateRequest;
+use App\Http\Requests\TransactionRequest;
 use App\Repositories\TransactionRepository;
 use App\User;
 
@@ -29,10 +29,10 @@ class UserTransactionController extends Controller
   /**
    * Store a newly created resource in storage.
    *
-   * @param  \App\Http\Requests\TransactionCreateRequest  $request
+   * @param  \App\Http\Requests\TransactionRequest  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(TransactionCreateRequest $request)
+  public function store(TransactionRequest $request)
   {
     $transaction = $this->transactionRepository->store();
     if ($transaction) {

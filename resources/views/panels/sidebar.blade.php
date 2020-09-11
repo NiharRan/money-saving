@@ -23,39 +23,24 @@
         </a>
       </li>
 
-      @if(auth()->user()->is_lecturer)
-        <li class="nav-item">
-          <a href="{{ route('attendance.create') }}">
-            <i class="feather icon-clock"></i>
-            <span class="menu-title" data-i18n="">Attendance</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('lecturers.courses.calendar') }}">
-            <i class="feather icon-clock"></i>
-            <span class="menu-title" data-i18n="">Calendar</span>
-          </a>
-        </li>
-      @endif
-
 
       @if (auth()->user()->is_subscriber)
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-users"></i>
-            <span class="menu-title" data-i18n="">Account</span>
+            <span class="menu-title" data-i18n="">{{ __('Account') }}</span>
           </a>
           <ul class="menu-content" style="">
             <li class="">
               <a href="/accounts/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __('New') }}</span>
               </a>
             </li>
             <li class="">
               <a href="/accounts">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __('List') }}</span>
               </a>
             </li>
           </ul>
@@ -66,19 +51,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-users"></i>
-            <span class="menu-title" data-i18n="">User</span>
+            <span class="menu-title" data-i18n="">{{ __('User') }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/users/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __('New') }}</span>
               </a>
             </li>
             <li class="">
               <a href="/users">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __('List') }}</span>
               </a>
             </li>
           </ul>
@@ -90,19 +75,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-unlock"></i>
-            <span class="menu-title" data-i18n="">Role</span>
+            <span class="menu-title" data-i18n="">{{ __('Role') }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/settings/roles/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __('New') }}</span>
               </a>
             </li>
             <li class="">
               <a href="/settings/roles">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __('List') }}</span>
               </a>
             </li>
           </ul>
@@ -111,19 +96,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-unlock"></i>
-            <span class="menu-title" data-i18n="">Account Type</span>
+            <span class="menu-title" data-i18n="">{{ __('Account Type') }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/settings/account-types/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __('New') }}</span>
               </a>
             </li>
             <li class="">
               <a href="/settings/account-types">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __('List') }}</span>
               </a>
             </li>
           </ul>
@@ -132,19 +117,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-unlock"></i>
-            <span class="menu-title" data-i18n="">Transaction Type</span>
+            <span class="menu-title" data-i18n="">{{ __('Transaction Type') }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/settings/transaction-types/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __("New") }}</span>
               </a>
             </li>
             <li class="">
               <a href="/settings/transaction-types">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __("List") }}</span>
               </a>
             </li>
           </ul>
@@ -153,19 +138,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-unlock"></i>
-            <span class="menu-title" data-i18n="">Money Format</span>
+            <span class="menu-title" data-i18n="">{{ __("Money Format") }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/settings/money-formats/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __("New") }}</span>
               </a>
             </li>
             <li class="">
               <a href="/settings/money-formats">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __("List") }}</span>
               </a>
             </li>
           </ul>
@@ -174,19 +159,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-book"></i>
-            <span class="menu-title" data-i18n="">Religion</span>
+            <span class="menu-title" data-i18n="">{{ __("Religion") }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/religions/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __("New") }}</span>
               </a>
             </li>
             <li class="">
               <a href="/religions">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __("List") }}</span>
               </a>
             </li>
           </ul>
@@ -195,19 +180,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-book"></i>
-            <span class="menu-title" data-i18n="">Blood Group</span>
+            <span class="menu-title" data-i18n="">{{ __("Blood Group") }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/blood_groups/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __("New") }}</span>
               </a>
             </li>
             <li class="">
               <a href="/blood_groups">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __("List") }}</span>
               </a>
             </li>
           </ul>                                            </li>
@@ -215,19 +200,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-book"></i>
-            <span class="menu-title" data-i18n="">Gender</span>
+            <span class="menu-title" data-i18n="">{{ __("Gender") }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/genders/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __("New") }}</span>
               </a>
             </li>
             <li class="">
               <a href="/genders">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __("List") }}</span>
               </a>
             </li>
           </ul>                                            </li>
@@ -235,19 +220,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-book"></i>
-            <span class="menu-title" data-i18n="">Division</span>
+            <span class="menu-title" data-i18n="">{{ __("Division") }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/settings/divisions/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __("New") }}</span>
               </a>
             </li>
             <li class="">
               <a href="/settings/divisions">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __("List") }}</span>
               </a>
             </li>
           </ul>                                            </li>
@@ -255,19 +240,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-book"></i>
-            <span class="menu-title" data-i18n="">District</span>
+            <span class="menu-title" data-i18n="">{{ __("District") }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/settings/districts/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __("New") }}</span>
               </a>
             </li>
             <li class="">
               <a href="/settings/districts">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __("List") }}</span>
               </a>
             </li>
           </ul>                                            </li>
@@ -275,19 +260,19 @@
         <li class="nav-item has-sub">
           <a href="">
             <i class="feather icon-book"></i>
-            <span class="menu-title" data-i18n="">Upazilla</span>
+            <span class="menu-title" data-i18n="">{{ __("Upazilla") }}</span>
           </a>
           <ul class="menu-content">
             <li class="">
               <a href="/settings/upazillas/create">
                 <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">New</span>
+                <span class="menu-title" data-i18n="">{{ __("New") }}</span>
               </a>
             </li>
             <li class="">
               <a href="/settings/upazillas">
                 <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">List</span>
+                <span class="menu-title" data-i18n="">{{ __("List") }}</span>
               </a>
             </li>
           </ul>

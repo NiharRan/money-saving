@@ -11,6 +11,7 @@ class UserTransactionController extends Controller
   /**
    * Show the form for creating a new resource.
    *
+   * @param $id
    * @return \Illuminate\Http\Response
    */
   public function create($id)

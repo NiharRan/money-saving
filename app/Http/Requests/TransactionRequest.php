@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TransactionCreateRequest extends FormRequest
+class TransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,6 +28,7 @@ class TransactionCreateRequest extends FormRequest
             'user_id' => 'required',
             'transaction_type_id' => 'required',
             'amount' => 'required|numeric',
+            'trans_date' => 'required',
         ];
     }
 
@@ -43,6 +44,7 @@ class TransactionCreateRequest extends FormRequest
       'user_id.required' => 'Account member is required',
       'transaction_type_id.required' => 'Transaction type is required',
       'amount.required' => 'Amount is required',
+      'trans_date.required' => 'Transaction date is required',
       'amount.numeric' => 'Invalid amount',
     ];
   }

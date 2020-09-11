@@ -29,26 +29,27 @@
               <div class="row">
                 <div class="col-12">
                   <div class="border rounded px-1">
-                    <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i class="fa fa-info-circle mr-50 "></i>User Info</h6>
+                    <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i class="fa fa-info-circle mr-50 "></i>{{ __("User
+                      Info") }}</h6>
                     <div class="row">
                       <div class="col-12 col-md-8">
                         <div class="form-group row">
                           <div class="col-12 col-md-6">
-                            <label for="name">Name <span class="text-danger">*</span></label>
-                            <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" placeholder="Student Name">
+                            <label for="name">{{ __("Name") }} <span class="text-danger">*</span></label>
+                            <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __("User Name") }}">
                             @error('name')
                             <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
                           </div>
                           <div class="col-12 col-md-6">
-                            <label for="name">Contact No. <span class="text-danger">*</span></label>
+                            <label for="name">{{ __("Contact No.") }} <span class="text-danger">*</span></label>
                             <input
                               type="text"
                               name="phone"
                               id="phone"
                               value="{{ old('phone') }}"
                               class="form-control @error('phone') is-invalid @enderror"
-                              placeholder="Student Contact No.">
+                              placeholder="{{ __("Contact No.") }}">
                             @error('phone')
                             <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
@@ -57,26 +58,26 @@
 
                         <div class="form-group row">
                           <div class="col-12 col-md-6">
-                            <label for="name">Mother Name <span class="text-danger">*</span></label>
+                            <label for="name">{{ __("Mother Name") }} <span class="text-danger">*</span></label>
                             <input
                               type="text"
                               name="mother_name"
                               id="mother_name"
                               value="{{ old('mother_name') }}"
                               class="form-control @error('mother_name') is-invalid @enderror"
-                              placeholder="Student Mother Name">
+                              placeholder="{{ __("Mother Name") }}">
                             @error('mother_name')
                             <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
                           </div>
                           <div class="col-12 col-md-6">
-                            <label for="name">Gender <span class="text-danger">*</span></label>
+                            <label for="name">{{ __("Gender") }} <span class="text-danger">*</span></label>
                             <select
                               name="gender_id"
                               id="gender_id"
                               value="{{ old('gender_id') }}"
                               class="form-control @error('gender_id') is-invalid @enderror">
-                              <option value="">Select One</option>
+                              <option value="">{{ __("Select One") }}</option>
                               @if(count($genders) > 0)
                                 @foreach($genders as $row)
                                   <option value="{{ $row->id }}" {{ old('gender_id') == $row->id ? "selected" : "" }}>{{ $row->name }}</option>
@@ -91,22 +92,22 @@
 
                         <div class="form-group row">
                           <div class="col-12 col-md-6">
-                            <label for="name">Father Name <span class="text-danger">*</span></label>
+                            <label for="name">{{ __("Father Name") }} <span class="text-danger">*</span></label>
                             <input
                               type="text"
                               name="father_name"
                               id="father_name"
                               value="{{ old('father_name') }}"
                               class="form-control @error('father_name') is-invalid @enderror"
-                              placeholder="Student Father Name">
+                              placeholder="{{ __("Father Name") }}">
                             @error('father_name')
                             <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
                           </div>
                           <div class="col-12 col-md-6">
-                            <label for="name">Blood Group</label>
+                            <label for="name">{{ __("Blood Group") }}</label>
                             <select name="blood_group_id" id="blood_group_id" value="{{ old('blood_group_id') }}" class="form-control @error('blood_group_id') is-invalid @enderror">
-                              <option value="">Select One</option>
+                              <option value="">{{ __("Select One") }}</option>
                               @if(count($bloodGroups) > 0)
                                 @foreach($bloodGroups as $row)
                                   <option value="{{ $row->id }}" {{ old('blood_group_id') == $row->id ? "selected" : "" }}>{{ $row->name }}</option>
@@ -137,26 +138,26 @@
                     </div>
                     <div class="form-group row">
                       <div class="col-12 col-md-3">
-                        <label for="name">Birth Date <span class="text-danger">*</span></label>
+                        <label for="name">{{ __("Birth Date") }} <span class="text-danger">*</span></label>
                         <input
                           type="text"
                           name="birth_date"
                           id="birth_date"
                           value="{{ old('birth_date') }}"
                           class="form-control @error('birth_date') is-invalid @enderror"
-                          placeholder="Student Birth Date">
+                          placeholder="{{ __("Birth Date") }}">
                         @error('birth_date')
                         <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
                       </div>
                       <div class="col-12 col-md-3">
-                        <label for="name">Religion <span class="text-danger">*</span></label>
+                        <label for="name">{{ __("Religion") }} <span class="text-danger">*</span></label>
                         <select
                           name="religion_id"
                           id="religion_id"
                           value="{{ old('religion_id') }}"
                           class="form-control @error('religion_id') is-invalid @enderror">
-                          <option value="">Select One</option>
+                          <option value="">{{ __("Select One") }}</option>
                           @if(count($religions) > 0)
                             @foreach($religions as $row)
                               <option value="{{ $row->id }}" {{ old('religion_id') == $row->id ? "selected" : "" }}>{{ $row->name }}</option>
@@ -168,27 +169,27 @@
                         @enderror
                       </div>
                       <div class="col-12 col-md-3">
-                        <label for="name">Nationality <span class="text-danger">*</span></label>
+                        <label for="name">{{ __("Nationality") }} <span class="text-danger">*</span></label>
                         <input
                           type="text"
                           name="nationality"
                           id="nationality"
                           value="{{ old('nationality') }}"
                           class="form-control @error('nationality') is-invalid @enderror"
-                          placeholder="Student Nationality">
+                          placeholder="{{ __("Nationality") }}">
                         @error('nationality')
                         <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
                       </div>
                       <div class="col-12 col-md-3">
-                        <label for="name">Email</label>
+                        <label for="name">{{ __("Email Address") }}</label>
                         <input
                           type="email"
                           name="email"
                           id="email"
                           value="{{ old('email') }}"
                           class="form-control @error('email') is-invalid @enderror"
-                          placeholder="Student Email Address">
+                          placeholder="{{ __("Email Address") }}">
                         @error('email')
                         <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -198,19 +199,20 @@
                 </div>
                 <div class="col-12">
                   <div class="border rounded px-1 my-2">
-                    <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i class="fa fa-address-card-o mr-50 "></i>Permanent Address</h6>
+                    <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2">
+                      <i class="fa fa-address-card-o mr-50 "></i>{{ __("Permanent Address") }}</h6>
                     <div class="col-12">
                       <input type="hidden" id="old_district_id" value="{{ old('district_id') }}">
                       <input type="hidden" id="old_upazilla_id" value="{{ old('upazilla_id') }}">
                       <div class="form-group row">
                         <div class="col-12 col-md-3">
-                          <label for="name">Division</label>
+                          <label for="name">{{ __("Division") }}</label>
                           <select
                               name="division_id"
                               id="division_id"
                               value="{{ old('division_id') }}"
                               class="form-control @error('division_id') is-invalid @enderror">
-                            <option value="">Select One</option>
+                            <option value="">{{ __("Select One") }}</option>
                             @if(count($divisions) > 0)
                               @foreach($divisions as $row)
                                 <option value="{{ $row->id }}" {{ old('division_id') == $row->id ? "selected" : "" }}>{{ $row->name }}</option>
@@ -222,40 +224,40 @@
                           @enderror
                         </div>
                         <div class="col-12 col-md-3">
-                          <label for="name">District <span class="text-danger">*</span></label>
+                          <label for="name">{{ __("District") }} <span class="text-danger">*</span></label>
                           <select
                               name="district_id"
                               id="district_id"
                               value="{{ old('district_id') }}"
                               class="form-control @error('district_id') is-invalid @enderror">
-                            <option value="">Select One</option>
+                            <option value="">{{ __("Select One") }}</option>
                           </select>
                           @error('district_id')
                           <span class="invalid-feedback">{{ $message }}</span>
                           @enderror
                         </div>
                         <div class="col-12 col-md-3">
-                          <label for="name">Upazilla <span class="text-danger">*</span></label>
+                          <label for="name">{{ __("Upazilla") }} <span class="text-danger">*</span></label>
                           <select
                               name="upazilla_id"
                               id="upazilla_id"
                               value="{{ old('upazilla_id') }}"
                               class="form-control @error('upazilla_id') is-invalid @enderror">
-                            <option value="">Select One</option>
+                            <option value="">{{ __("Select One") }}</option>
                           </select>
                           @error('upazilla_id')
                           <span class="invalid-feedback">{{ $message }}</span>
                           @enderror
                         </div>
                         <div class="col-12 col-md-3">
-                          <label for="name">Village/House No. <span class="text-danger">*</span></label>
+                          <label for="name">{{ __("Village/House No.") }} <span class="text-danger">*</span></label>
                           <input
                               type="text"
                               name="address"
                               id="address"
                               value="{{ old('address') }}"
                               class="form-control @error('address') is-invalid @enderror"
-                              placeholder="Student Village/House No.">
+                              placeholder="{{ __("Village/House No.") }}">
                           @error('address')
                           <span class="invalid-feedback">{{ $message }}</span>
                           @enderror
@@ -265,7 +267,7 @@
                   </div>
                 </div>
                 <div class="col-12">
-                  <button type="submit" class="btn btn-success m-auto"><i class="feather icon-plus"></i> Submit</button>
+                  <button type="submit" class="btn btn-success m-auto"><i class="feather icon-plus"></i> {{ __("Submit") }}</button>
                 </div>
               </div>
             </form>

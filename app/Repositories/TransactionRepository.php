@@ -16,8 +16,10 @@ class TransactionRepository
     return Transaction::with([
         'user',
         'transaction_type',
-        'account'
-    ])->orderBy('name', 'asc');
+        'account' => function ($query) {
+          return $query->orderBy('name');
+        }
+    ]);
   }
 
   public function transactionsDataInTable()
@@ -89,10 +91,23 @@ class TransactionRepository
             $statusClass = $transaction->status == 1 ? 'icon-check-square text-success' : 'icon-x text-danger';
             return "<p class='text-center'><span class='m-auto'><i class='feather $statusClass'></i></span></p>";
           })
+          ->addColumn('action', function ($transaction) use ($accountId) {
+            $output = '';
+            if ($transaction->user_id === auth()->user()->id) {
+              $output = '<a href="' . route('accounts.transactions.edit', [$accountId, $transaction->id]) . '" class="action-edit"><i class="feather icon-edit"></i></a>
+                    <form class="display-inline-block" id="destroy_form" action="' . route('api.transactions.destroy', $transaction->id) . '" method="post" onsubmit="return confirm('. __('Are you sure?') .')">
+                      <input type="hidden" name="_token" value="' . csrf_token() . '">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button class="normal-link" type="submit"><i class="feather icon-trash-2"></i></button>
+                    </form>';
+            }
+            return $output;
+          })
           ->rawColumns([
             'invoice',
             'amount',
             'status',
+            'action'
           ])->make(true);
       } catch (\Exception $e) {
           return $e->getMessage();
@@ -124,9 +139,10 @@ class TransactionRepository
   {
     $transaction = Transaction::find($transactionId);
     return $transaction->update([
-      'name' => request()->name,
-      'slug' => Str::slug(request()->name),
-      'status' => request()->status
+      'account_id' => request()->account_id,
+      'transaction_type_id' => request()->transaction_type_id,
+      'amount' => request()->amount,
+      'trans_date' => date('Y-m-d', strtotime(request()->trans_date)),
     ]);
   }
 
@@ -146,6 +162,7 @@ class TransactionRepository
         'user_id' => $user_id,
         'transaction_type_id' => request()->transaction_type_id,
         'amount' => request()->amount,
+        'trans_date' => date('Y-m-d', strtotime(request()->trans_date)),
         'created_at' => date('Y-m-d H:i:s')
     ]);
   }

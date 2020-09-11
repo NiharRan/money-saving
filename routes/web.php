@@ -27,10 +27,11 @@ Route::middleware(['auth', 'lang'])->group(function () {
   Route::resource('users', 'UserController')->only(['index', 'create', 'edit']);
   Route::resource('accounts', 'AccountController')->only(['index', 'create', 'edit']);
   Route::get('/{slug}', 'UserProfileController@show')->name('users.profile');
-  Route::get('/{slug}/transactions', 'UserTransactionController@create')->name('users.transactions.create');
+  Route::get('/users/{slug}/transactions', 'UserTransactionController@create')->name('users.transactions.create');
 
   Route::get('/accounts/{slug}', 'AccountProfileController@show')->name('accounts.profile');
   Route::get('/accounts/{accountId}/transactions', 'AccountTransactionController@create')->name('accounts.transactions.create');
+  Route::get('/accounts/{accountId}/transactions/{transactionId}', 'AccountTransactionController@edit')->name('accounts.transactions.edit');
 
 
   Route::group([
@@ -63,8 +64,10 @@ Route::middleware(['auth', 'lang'])->group(function () {
     Route::resource('accounts', 'AccountController')->except(['create', 'edit']);
     Route::get('accounts/{accountId}/transactions', 'AccountTransactionController@index')->name('accounts.transactions.index');
     Route::post('accounts/transactions', 'AccountTransactionController@store')->name('accounts.transactions.store');
+    Route::put('accounts/{transactionId}/transactions', 'AccountTransactionController@update')->name('accounts.transactions.update');
 
 
     Route::get('/transactions', 'TransactionController@index')->name('transactions.index');
+    Route::delete('/transactions', 'TransactionController@destroy')->name('transactions.destroy');
   });
 });

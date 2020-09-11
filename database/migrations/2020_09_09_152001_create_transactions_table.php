@@ -20,6 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('transaction_type_id');
             $table->double('amount', 10, 2);
+            $table->date('trans_date');
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

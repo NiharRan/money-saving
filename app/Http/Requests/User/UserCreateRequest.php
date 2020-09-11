@@ -35,7 +35,7 @@ class UserCreateRequest extends FormRequest
           'division_id'     => 'required',
           'district_id'     => 'required',
           'upazilla_id'     => 'required',
-          'avatar'            => 'required|image|mimes:jpeg,png,jpg|max:2048'
+          'avatar'          => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ];
     }
 
@@ -47,24 +47,24 @@ class UserCreateRequest extends FormRequest
   public function messages()
   {
     return [
-      'name.required' => 'Student name is required',
-      'father_name.required' => 'Student father name is required',
-      'mother_name.required' => 'Student mother name is required',
-      'phone.required' => 'Contact no. is required',
-      'gender_id.required' => 'Gender is required',
-      'birth_date.required' => 'Birth date name is required',
-      'religion_id.required' => 'Religion is required',
-      'nationality.required' => 'Nationality is required',
-      'division_id.required' => 'Division is required',
-      'district_id.required' => 'District is required',
-      'upazilla_id.required' => 'Upazilla is required',
+      'name.required' => __("User name is required"),
+      'father_name.required' => __("User father name is required"),
+      'mother_name.required' => __("User mother name is required"),
+      'phone.required' => __("Contact no. is required"),
+      'gender_id.required' => __("Gender is required"),
+      'birth_date.required' => __("Birth date is required"),
+      'religion_id.required' => __("Religion is required"),
+      'nationality.required' => __("Nationality is required"),
+      'division_id.required' => __("Division is required"),
+      'district_id.required' => __("District is required"),
+      'upazilla_id.required' => __("Upazilla is required"),
 
-      'phone.unique' => 'This contact no. is already used',
+      'phone.unique' => __("This contact no. is already used"),
 
-      'avatar.required' => 'Student image is required',
-      'avatar.image' => 'Invalid file',
-      'avatar.mimes' => 'Image must be with in jpeg, png, or jpg format',
-      'avatar.max' => 'Image must be less then 2mb'
+      'avatar.required' => __("User image is required"),
+      'avatar.image' => __("Invalid file"),
+      'avatar.mimes' => __("Image must be with in jpeg, png, or jpg format"),
+      'avatar.max' => __("Image must be less then 2mb")
     ];
   }
 }

@@ -29,8 +29,8 @@ class UserController extends Controller
         'pageHeader' => true
       ];
       $breadcrumbs = [
-        ['link'=>"/",'name'=>"Home"],
-        ['name'=>"Users"],
+        ['link'=>"/",'name'=> __('Home')],
+        ['name'=> __("Users") ],
       ];
       return view('/pages/users/index', [
         'breadcrumbs' => $breadcrumbs
@@ -53,9 +53,9 @@ class UserController extends Controller
         'pageHeader' => true
       ];
       $breadcrumbs = [
-        ['link'=>"/",'name'=>"Home"],
-        ['link' => '/users', 'name'=>"Users"],
-        ['name'=>"Create New User"],
+        ['link'=>"/",'name'=> __("Home")],
+        ['link' => '/users', 'name'=> __("Users")],
+        ['name'=> __("Create New User")],
       ];
       return view('/pages/users/create', [
         'breadcrumbs' => $breadcrumbs

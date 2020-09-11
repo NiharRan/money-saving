@@ -83,11 +83,12 @@
                 <table id="data-table" class="table table-hover-animation mb-0">
                   <thead>
                     <tr>
-                      <th>INVOICE</th>
-                      <th>ACCOUNT</th>
-                      <th>TYPE</th>
-                      <th>AMOUNT</th>
-                      <th>DATE</th>
+                      <th class="text-uppercase text-center">{{ __("Invoice") }}</th>
+                      <th class="text-uppercase">{{ __("Account") }}</th>
+                      <th class="text-uppercase">{{ __('Transaction Type') }}</th>
+                      <th class="text-uppercase text-right">{{ __('Amount') }}</th>
+                      <th class="text-uppercase text-center">{{ __("Status") }}</th>
+                      <th class="text-uppercase text-center">{{ __('Date') }}</th>
                     </tr>
                   </thead>
 
@@ -112,12 +113,13 @@
                   <table id="data-table" class="table table-bordered display responsive nowrap mb-0" style="width: 100%">
                     <thead>
                     <tr>
-                      <th>INVOICE</th>
-                      <th>ACCOUNT</th>
-                      <th>MEMBER</th>
-                      <th>TYPE</th>
-                      <th>AMOUNT</th>
-                      <th>DATE</th>
+                      <th class="text-uppercase text-center">{{ __("Invoice") }}</th>
+                      <th class="text-uppercase">{{ __('Account') }}</th>
+                      <th class="text-uppercase">{{ __('Member') }}</th>
+                      <th class="text-uppercase">{{ __('Transaction Type') }}</th>
+                      <th class="text-uppercase text-right">{{ __('Amount') }}</th>
+                      <th class="text-uppercase text-center">{{ __("Status") }}</th>
+                      <th class="text-uppercase text-center">{{ __('Date') }}</th>
                     </tr>
                     </thead>
 
@@ -158,7 +160,7 @@
                     { data: 'transaction_type.name', name: 'transaction_type_id' },
                     { data: 'amount', name: 'amount' },
                     { data: 'status', name: 'status', searchable: false , searchable: false},
-                    { data: 'created_at', name: 'created_at' },
+                    { data: 'default_date_time', name: 'updated_at' },
                   ]
                 });
               }
@@ -182,7 +184,7 @@
                     { data: 'transaction_type.name', name: 'transaction_type_id' },
                     { data: 'amount', name: 'amount' },
                     { data: 'status', name: 'status', searchable: false , searchable: false},
-                    { data: 'created_at', name: 'created_at' },
+                    { data: 'default_date_time', name: 'updated_at' },
                   ]
                 });
               }

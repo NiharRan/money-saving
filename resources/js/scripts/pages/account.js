@@ -87,6 +87,17 @@ $(function () {
     });
   }
 
+  let $accountTransactionEditForm = $("#account_transaction_edit_form");
+  if ($accountTransactionEditForm !== undefined) {
+    $accountTransactionEditForm.submit(function (e) {
+      cleanForm();
+      e.preventDefault();
+      const url = $(this).attr('action');
+      const formData = $(this).serialize();
+      updateTransactionData(url, formData);
+    });
+  }
+
   async function storeData(url, formData) {
     try {
       const {data} = await axios.post(url, formData);
@@ -114,6 +125,21 @@ $(function () {
     } catch (error) {
       const errors = error.response.data.errors;
       showErrors("#account_transaction_create_form", errors);
+    }
+  }
+
+  async function updateTransactionData(url, formData) {
+    try {
+      const {data} = await axios.put(url, formData);
+      if (data.success) {
+        showSuccessAlert(data.success);
+        setTimeout(() => {
+          window.location.href = data.redirect_to;
+        }, 1000);
+      }
+    } catch (error) {
+      const errors = error.response.data.errors;
+      showErrors("#account_transaction_edit_form", errors);
     }
   }
 

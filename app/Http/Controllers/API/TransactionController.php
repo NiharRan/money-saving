@@ -17,10 +17,9 @@ class TransactionController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  int  $id
    * @return string
    */
-  public function index($id)
+  public function index()
   {
     return $this->transactionRepository->transactionsDataInTable();
   }

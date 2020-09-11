@@ -96,13 +96,14 @@
               <table id="data-table" class="table table-bordered display responsive nowrap mb-0" style="width: 100%">
                 <thead>
                 <tr>
-                  <th scope="col">S.N.</th>
-                  <th class="text-center">Invoice</th>
-                  <th>Member</th>
-                  <th>Transaction Type</th>
-                  <th class="text-right">Amount</th>
-                  <th class="text-center">Status</th>
-                  <th class="text-center">Date</th>
+                  <th scope="col">{{ __('S.N.') }}</th>
+                  <th class="text-center">{{ __('Invoice') }}</th>
+                  <th>{{ __('Member') }}</th>
+                  <th>{{ __('Transaction Type') }}</th>
+                  <th class="text-right">{{ __('Amount') }}</th>
+                  <th class="text-center">{{ __('Status') }}</th>
+                  <th>{{ __('Transaction Date') }}</th>
+                  <th class="text-center">{{ __('Action') }}</th>
                 </tr>
                 </thead>
               </table>
@@ -143,7 +144,8 @@
             { data: 'transaction_type.name', name: 'transaction_type_id' },
             { data: 'amount', name: 'amount' },
             { data: 'status', name: 'status', searchable: false , searchable: false},
-            { data: 'created_at', name: 'created_at' },
+            { data: 'transaction_date', name: 'trans_date' },
+            { data: 'action', name: 'action', searchable: false , searchable: false},
           ]
         });
       }

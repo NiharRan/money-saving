@@ -25,7 +25,7 @@
   </div>
   @if (View::hasSection('create-link'))
     <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
-      <a class="btn btn-primary" href="@yield('create-link')"><i class="feather icon-plus"></i> New</a>
+      <a class="btn btn-primary" href="@yield('create-link')"><i class="feather icon-plus"></i> {{ __("New") }}</a>
     </div>
   @endif
 </div>
