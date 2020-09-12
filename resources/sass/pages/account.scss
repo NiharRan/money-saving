@@ -8,6 +8,8 @@
 }
 .account-trans-btn {
     display: flex;
+  flex-direction: column;
+  align-self: center;
 }
 .account-trans-btn .btn{
     align-self: center;

@@ -28,10 +28,18 @@ Route::middleware(['auth', 'lang'])->group(function () {
   Route::resource('accounts', 'AccountController')->only(['index', 'create', 'edit']);
   Route::get('/{slug}', 'UserProfileController@show')->name('users.profile');
   Route::get('/users/{slug}/transactions', 'UserTransactionController@create')->name('users.transactions.create');
+  Route::get('/users/{userId}/transactions/{transactionId}', 'UserTransactionController@edit')->name('users.transactions.edit');
 
   Route::get('/accounts/{slug}', 'AccountProfileController@show')->name('accounts.profile');
+
   Route::get('/accounts/{accountId}/transactions', 'AccountTransactionController@create')->name('accounts.transactions.create');
   Route::get('/accounts/{accountId}/transactions/{transactionId}', 'AccountTransactionController@edit')->name('accounts.transactions.edit');
+
+  Route::get('/accounts/{accountId}/loans', 'AccountLoanController@create')->name('accounts.loans.create');
+  Route::get('/accounts/{accountId}/loans/{loanId}', 'AccountLoanController@edit')->name('accounts.loans.edit');
+
+  Route::delete('/transactions/{transactionId}', 'TransactionController@destroy')->name('transactions.destroy');
+  Route::delete('/loans/{loanId}', 'LoanController@destroy')->name('loans.destroy');
 
 
   Route::group([
@@ -61,13 +69,19 @@ Route::middleware(['auth', 'lang'])->group(function () {
     Route::get('users/{userId}/transactions', 'UserTransactionController@index')->name('users.transactions.index');
     Route::post('users/transactions', 'UserTransactionController@store')->name('users.transactions.store');
 
-    Route::resource('accounts', 'AccountController')->except(['create', 'edit']);
+    Route::resource('accounts', 'AccountController')->except(['create', 'edit', 'update']);
+    Route::post('accounts/{accountId}', 'AccountController@update')->name('accounts.update');
+
     Route::get('accounts/{accountId}/transactions', 'AccountTransactionController@index')->name('accounts.transactions.index');
     Route::post('accounts/transactions', 'AccountTransactionController@store')->name('accounts.transactions.store');
     Route::put('accounts/{transactionId}/transactions', 'AccountTransactionController@update')->name('accounts.transactions.update');
 
+    Route::get('accounts/{accountId}/loans', 'AccountLoanController@index')->name('accounts.loans.index');
+    Route::post('accounts/loans', 'AccountLoanController@store')->name('accounts.loans.store');
+    Route::put('accounts/{loanId}/loans', 'AccountLoanController@update')->name('accounts.loans.update');
+
 
     Route::get('/transactions', 'TransactionController@index')->name('transactions.index');
-    Route::delete('/transactions', 'TransactionController@destroy')->name('transactions.destroy');
+    Route::get('/loans', 'LoanController@index')->name('loans.index');
   });
 });

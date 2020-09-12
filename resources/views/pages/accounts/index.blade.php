@@ -31,14 +31,14 @@
                 <table id="data-table" class="table table-bordered display responsive nowrap mb-0" style="width: 100%">
                   <thead>
                   <tr>
-                    <th scope="col">S.N.</th>
-                    <th>Name</th>
-                    <th>Members</th>
-                    <th>Type</th>
-                    <th>Money Format</th>
-                    <th>Date</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-right">Actions</th>
+                    <th scope="col">{{ __('S.N.') }}</th>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Members') }}</th>
+                    <th>{{ __('Account Type') }}</th>
+                    <th>{{ __('Money Format') }}</th>
+                    <th>{{ __('Date') }}</th>
+                    <th class="text-center">{{ __('Status') }}</th>
+                    <th class="text-right">{{ __('Action') }}</th>
                   </tr>
                   </thead>
                 </table>

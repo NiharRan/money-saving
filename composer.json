@@ -13,8 +13,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.5",
         "laravel/framework": "^6.0",
-        "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0",
+        "spatie/laravel-backup": "^6.11",
         "yajra/laravel-datatables-oracle": "^9.10"
     },
     "require-dev": {

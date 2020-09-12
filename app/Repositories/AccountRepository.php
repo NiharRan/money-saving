@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Account;
 use App\Settings\TransactionType;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -42,7 +43,16 @@ class AccountRepository
   public function accountDataInTable()
   {
     try {
-      return DataTables::of($this->all()->get())
+      if (\auth()->user()->isSubscriber) {
+        $query = User::with([
+          'accounts',
+          'accounts.account_type',
+          'accounts.money_format'
+        ])->find(\auth()->id())->accounts;
+      }else {
+        $query = $this->all()->get();
+      }
+      return DataTables::of($query)
         ->addColumn('name', function ($account) {
           return '<div class="d-flex align-items-center">
                      <div class="avatar p-0 m-0">

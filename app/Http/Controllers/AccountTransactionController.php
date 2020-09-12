@@ -25,7 +25,7 @@ class AccountTransactionController extends Controller
         $breadcrumbs = [
           ['link'=>"/",'name'=> __('Home')],
           ['link'=> route('accounts.profile', $account->slug),'name'=> $account->name],
-            ['name'=> __('')],
+            ['name'=> __('Transaction Create Message')],
         ];
         return view('/pages/accounts/transaction', [
             'breadcrumbs' => $breadcrumbs

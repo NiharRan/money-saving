@@ -98,64 +98,68 @@ $(function () {
     });
   }
 
-  async function storeData(url, formData) {
-    try {
-      const {data} = await axios.post(url, formData);
-      if (data.success) {
-        showSuccessAlert(data.success);
-        setTimeout(() => {
-          window.location.href = "/accounts";
-        }, 1000);
-      }
-    } catch (error) {
-      const errors = error.response.data.errors;
-      showErrors("#account_create_form", errors);
-    }
+  function storeData(url, formData) {
+    axios.post(url, formData)
+      .then(function ({data}) {
+        if (data.success) {
+          showSuccessAlert(data.success);
+          setTimeout(() => {
+            window.location.href = "/accounts";
+          }, 1000);
+        }
+      })
+      .catch(function (error) {
+        const errors = error.response.data.errors;
+        showErrors("#account_create_form", errors);
+      });
   }
 
-  async function storeTransactionData(url, formData) {
-    try {
-      const {data} = await axios.post(url, formData);
-      if (data.success) {
-        showSuccessAlert(data.success);
-        setTimeout(() => {
-          window.location.href = data.redirect_to;
-        }, 1000);
-      }
-    } catch (error) {
-      const errors = error.response.data.errors;
-      showErrors("#account_transaction_create_form", errors);
-    }
+  function storeTransactionData(url, formData) {
+    axios.post(url, formData)
+      .then(function ({data}) {
+        if (data.success) {
+          showSuccessAlert(data.success);
+          setTimeout(() => {
+            window.location.href = data.redirect_to;
+          }, 1000);
+        }
+      })
+      .then(function (error) {
+        const errors = error.response.data.errors;
+        showErrors("#account_transaction_create_form", errors);
+      });
   }
 
-  async function updateTransactionData(url, formData) {
-    try {
-      const {data} = await axios.put(url, formData);
-      if (data.success) {
-        showSuccessAlert(data.success);
-        setTimeout(() => {
-          window.location.href = data.redirect_to;
-        }, 1000);
-      }
-    } catch (error) {
-      const errors = error.response.data.errors;
-      showErrors("#account_transaction_edit_form", errors);
-    }
+  function updateTransactionData(url, formData) {
+    axios.put(url, formData)
+      .then(function ({data}) {
+        if (data.success) {
+          showSuccessAlert(data.success);
+          setTimeout(() => {
+            window.location.href = data.redirect_to;
+          }, 1000);
+        }
+      })
+      .catch(function (error) {
+        const errors = error.response.data.errors;
+        showErrors("#account_transaction_edit_form", errors);
+      });
   }
 
-  async function updateData(url, formData) {
-    try {
-      const {data} = await axios.put(url, formData);
-      if (data.success) {
-        showSuccessAlert(data.success);
-        setTimeout(() => {
-          window.location.href = "/accounts";
-        }, 1000);
-      }
-    } catch (error) {
-      const errors = error.response.data.errors;
-      showErrors("#account_edit_form", errors);
-    }
+  function updateData(url, formData) {
+    axios.put(url, formData)
+      .then(function ({data}) {
+        if (data.success) {
+          showSuccessAlert(data.success);
+          setTimeout(() => {
+            window.location.href = "/accounts";
+          }, 1000);
+        }
+      })
+      .catch(function (error) {
+        const errors = error.response.data.errors;
+        showErrors("#account_edit_form", errors);
+      });
   }
 
 

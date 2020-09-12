@@ -38,9 +38,9 @@ class AccountUpdateRequest extends FormRequest
   public function messages()
   {
     return [
-      'name.required' => 'Account name is required',
-      'account_type_id.required' => 'Account type is required',
-      'money_format_id.required' => 'Money format is required',
+      'name.required' => __("Account name is required"),
+      'account_type_id.required' => __("Account type is required"),
+      'money_format_id.required' => __("Money format is required"),
     ];
   }
 }

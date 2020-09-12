@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Settings\TransactionType;
+use App\Transaction;
 use App\User;
-use Illuminate\Http\Request;
 
 class UserTransactionController extends Controller
 {
@@ -32,6 +32,38 @@ class UserTransactionController extends Controller
       'transactionTypes' => $transactionTypes,
       'accounts' => $user->accounts,
       'user_id' => $id
+    ]);
+  }
+
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param $userId
+   * @param $transactionId
+   * @return void
+   */
+  public function edit($userId, $transactionId)
+  {
+    $user = User::find($userId);
+    $transaction = Transaction::find($transactionId);
+    $transactionTypes = TransactionType::active()->orderBy('name', 'asc')->get();
+    $pageConfigs = [
+      'pageHeader' => true
+    ];
+    $breadcrumbs = [
+      ['link'=>"/",'name'=> __("Home")],
+      ['link'=> route('users.profile', $user->slug),'name'=> $user->name],
+      ['name'=> __("Transaction Edit Message", [
+        't' => $transaction->invoice,
+        'a' => $user->name
+      ])],
+    ];
+    return view('/pages/accounts/transaction-edit', [
+      'breadcrumbs' => $breadcrumbs
+    ])->with([
+      'transactionTypes' => $transactionTypes,
+      'transaction' => $transaction,
+      'user_id' => $userId,
     ]);
   }
 }

@@ -16,17 +16,26 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('father_name')->nullable();
             $table->string('mother_name')->nullable();
             $table->string('avatar')->nullable()->default('default.jpg');
             $table->string('phone')->unique();
             $table->string('email')->nullable()->unique();
+
             $table->unsignedBigInteger('gender_id')->nullable();
+            $table->foreign('gender_id')->references('id')->on('genders');
+
             $table->date('birth_date')->nullable();
             $table->unsignedBigInteger('blood_group_id')->nullable();
+            $table->foreign('blood_group_id')->references('id')->on('blood_groups');
+
             $table->unsignedBigInteger('religion_id')->nullable();
+            $table->foreign('religion_id')->references('id')->on('religions');
+
             $table->unsignedBigInteger('role_id')->nullable();
+            $table->foreign('role_id')->references('id')->on('roles');
+
             $table->string('nationality')->default('Bangladeshi')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

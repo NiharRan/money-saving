@@ -20,6 +20,11 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
+          @if (session('success'))
+            <div class="alert alert-success">
+              {{ session('success') }}
+            </div>
+          @endif
           <div class="row">
             <div class="col-12 col-md-3 account-profile border-right">
               <img src="{{ $account->logoMedium }}" class="w-100 rounded mb-2"
@@ -40,7 +45,8 @@
               </table>
             </div>
             <div class="col-md-3 col-12 account-trans-btn">
-              <a href="{{ route('accounts.transactions.create', $account->id) }}" class="btn btn-primary"><i class="feather icon-plus"></i> Transaction</a>
+              <a href="{{ route('accounts.transactions.create', $account->id) }}" class="btn btn-block btn-primary"><i class="feather icon-plus"></i> {{ __("Transaction") }}</a>
+              <a href="{{ route('accounts.loans.create', $account->id) }}" class="btn btn-block btn-success"><i class="feather icon-plus"></i> {{ __("Loan") }}</a>
             </div>
           </div>
         </div>
@@ -89,7 +95,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Transactions</h3>
+          <h3 class="card-title">{{ __("Transactions") }}</h3>
         </div>
         <div class="card-body">
           <div class="table-responsive">

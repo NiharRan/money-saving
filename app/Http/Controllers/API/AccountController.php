@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AccountUpdateRequest;
 use App\Http\Requests\AccountCreateRequest;
 use App\Repositories\AccountRepository;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
 class AccountController extends Controller
@@ -19,7 +20,7 @@ class AccountController extends Controller
   /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -29,8 +30,8 @@ class AccountController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\AccountCreateRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param AccountCreateRequest $request
+     * @return Response
      */
     public function store(AccountCreateRequest $request)
     {
@@ -56,16 +57,17 @@ class AccountController extends Controller
             $account->logo = $fileNameToStore;
         }
         if ($account->save()) {
-            return response()->json(['success' => 'Account created successfully!']);
+            return response()
+              ->json(['success' => 'Account created successfully!']);
         }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\AccountUpdateRequest  $request
+     * @param AccountUpdateRequest $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(AccountUpdateRequest $request, $id)
     {
@@ -77,7 +79,7 @@ class AccountController extends Controller
             if ($account->logo != 'account.png') {
                 if (file_exists($originalImagePath)) {
                     Storage::delete($originalImagePath);
-                } 
+                }
                 if (file_exists($smallImagePath)) {
                     Storage::delete($smallImagePath);
                 }
@@ -106,7 +108,8 @@ class AccountController extends Controller
             $account->logo = $fileNameToStore;
         }
         if ($account->save()) {
-            return response()->json(['success' => 'Account Updated successfully!']);
+            return response()
+              ->json(['success' => 'Account Updated successfully!']);
         }
     }
 
@@ -114,7 +117,7 @@ class AccountController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

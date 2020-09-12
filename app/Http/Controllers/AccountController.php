@@ -6,6 +6,7 @@ use App\Repositories\AccountRepository;
 use App\Settings\AccountType;
 use App\Settings\MoneyFormat;
 use App\User;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
@@ -18,7 +19,7 @@ class AccountController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -26,8 +27,8 @@ class AccountController extends Controller
           'pageHeader' => true
         ];
         $breadcrumbs = [
-          ['link'=>"/",'name'=>"Home"],
-          ['name'=>"Accounts"],
+          ['link'=>"/",'name'=> __("Home")],
+          ['name'=> __("Accounts")],
         ];
         return view('/pages/accounts/index', [
           'breadcrumbs' => $breadcrumbs
@@ -37,7 +38,7 @@ class AccountController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -50,9 +51,9 @@ class AccountController extends Controller
         ->get();
 
         $breadcrumbs = [
-            ['link'=>"/",'name'=>"Home"],
-            ['link'=>"/accounts",'name'=>"Accounts"],
-            ['link'=>"",'name'=>"Create New Account"],
+            ['link'=>"/",'name'=> __("Home")],
+            ['link'=>"/accounts",'name'=> __("Accounts")],
+            ['link'=>"",'name'=> __("Create New Account")],
           ];
           return view('/pages/accounts/create', [
             'breadcrumbs' => $breadcrumbs
@@ -68,17 +69,17 @@ class AccountController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
       $account = $this->accountRepository->findById($id);
-      $subscribedUsers = []; 
+      $subscribedUsers = [];
       if ($account->joinAccount()) {
         $account->users->map(function ($user) use (&$subscribedUsers) {
           $subscribedUsers[] = $user->id;
         });
-      } 
+      }
       $account->subscribedUsers = $subscribedUsers;
       $accountTypes = AccountType::active()->orderBy('name', 'ASC')->get();
       $moneyFormats = MoneyFormat::active()->orderBy('name', 'ASC')->get();
@@ -89,9 +90,9 @@ class AccountController extends Controller
       ->get();
 
       $breadcrumbs = [
-          ['link'=>"/",'name'=>"Home"],
-          ['link'=>"/accounts",'name'=>"Accounts"],
-          ['link'=>"",'name'=>"Edit $account->name's Info"],
+          ['link'=>"/",'name'=> __("Home")],
+          ['link'=>"/accounts",'name'=> __("Accounts")],
+          ['link'=>"",'name'=> __("Edit :name Info", ['name' => $account->name])],
         ];
         return view('/pages/accounts/edit', [
           'breadcrumbs' => $breadcrumbs

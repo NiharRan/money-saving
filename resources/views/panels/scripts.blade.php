@@ -5,8 +5,8 @@
    ]) !!};
 </script>
 {{-- Vendor Scripts --}}
-  <script src="{{ asset('vendors/js/vendors.min.js') }}"></script>
-  <script src="{{ asset('vendors/js/vendors.min.js') }}"></script>
+<script src="{{ asset('vendors/js/vendors.min.js') }}"></script>
+<script src="{{ asset('vendors/js/sweetalert2.js') }}"></script>
   <script src="{{ asset('vendors/js/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
   <script src="{{ asset('vendors/js/axios.min.js') }}"></script>
 @yield('vendor-script')

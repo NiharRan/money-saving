@@ -3,11 +3,15 @@
   "Dashboard": "Dashboard",
   "Recent Transactions": "Recent Transactions",
   "User": "User",
-  "Member": "Member",
   "Users": "Users",
   "Create New User": "Create New User",
   "User Info": "User Info",
+
+  "Member": "Member",
+  "Members": "Members",
+
   "Name": "Name",
+  "Slugan": "Slugan",
   "User Name": "User Name",
   "User name is required": "User name is required",
   "List": "List",
@@ -19,28 +23,72 @@
   "User mother name is required": "User mother name is required",
   "Father Name": "Father Name",
   "User father name is required": "User father name is required",
+
   "Select One": "Select One",
+  "Select": "Select",
 
   "Account": "Account",
+  "Accounts": "Accounts",
+  "Account Info": "Account Info",
+  "Create New Account": "Create New Account",
+  "Edit :name Info": "Edit :name Info",
+  "Update :name Info": "Update :name Info",
+  "Account name is required": "Account name is required",
+  "Account is required": "Account is required",
+
   "Role": "Role",
+  "Role name is required": "Role name is required",
+  "Role is required": "Role is required",
+
   "Account Type": "Account Type",
+  "Account type name is required": "Account name type is required",
+  "Account type is required": "Account type is required",
+
   "Transaction": "Transaction",
+  "Transactions": "Transactions",
+
+  "Loan": "Loan",
+  "Loans": "Loans",
+
+
   "Transaction Type": "Transaction Type",
+  "Transaction type name is required": "Transaction type name is required",
+  "Transaction type is required": "Transaction type is required",
+
   "Transaction Date": "Transaction Date",
+  "Transaction date is required": "Transaction date is required",
+
   "Money Format": "Money Format",
+  "Money format name is required": "Money format name is required",
+  "Money format is required": "Money format is required",
+
   "Religion": "Religion",
+  "Religion name is required": "Religion name is required",
   "Religion is required": "Religion is required",
+
   "Blood Group": "Blood Group",
+  "Blood group name is required": "Blood group name is required",
+  "Blood group is required": "Blood group is required",
+
   "Gender": "Gender",
+  "Gender name is required": "Gender name is required",
   "Gender is required": "Gender is required",
+
   "Birth Date": "Birth Date",
   "Birth date is required": "Birth date is required",
+
   "Division": "Division",
+  "Division name is required": "Division name is required",
   "Division is required": "Division is required",
+
   "District": "District",
+  "District name is required": "District name is required",
   "District is required": "District is required",
+
   "Upazilla": "Upazilla",
+  "Upazilla name is required": "Upazilla name is required",
   "Upazilla is required": "Upazilla is required",
+
   "Nationality": "Nationality",
   "Nationality is required": "Nationality is required",
   "Email Address": "Email Address",
@@ -55,6 +103,7 @@
   "Invoice": "Invoice",
   "Status": "Status",
   "Amount": "Amount",
+  "Amount is required": "Amount is required",
   "Date": "Date",
   "S.N.": "S.N.",
   "Action": "Action",

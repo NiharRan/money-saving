@@ -65,6 +65,14 @@ class TransactionRepository
           $statusClass = $transaction->status == 1 ? 'icon-check-square text-success' : 'icon-x text-danger';
           return "<p class='text-center'><span class='m-auto'><i class='feather $statusClass'></i></span></p>";
         })
+        ->addColumn('action', function ($transaction) use ($userId) {
+          return '<a href="' . route('users.transactions.edit', [$userId, $transaction->id]) . '" class="action-edit"><i class="feather icon-edit"></i></a>
+                    <form class="display-inline-block" id="destroy_form" action="' . route('transactions.destroy', $transaction->id) . '" method="post" onsubmit="return confirm('. __('Are you sure?') .')">
+                      <input type="hidden" name="_token" value="' . csrf_token() . '">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button class="normal-link" type="submit"><i class="feather icon-trash-2"></i></button>
+                    </form>';
+        })
         ->rawColumns([
           'invoice',
           'amount',
@@ -95,7 +103,7 @@ class TransactionRepository
             $output = '';
             if ($transaction->user_id === auth()->user()->id) {
               $output = '<a href="' . route('accounts.transactions.edit', [$accountId, $transaction->id]) . '" class="action-edit"><i class="feather icon-edit"></i></a>
-                    <form class="display-inline-block" id="destroy_form" action="' . route('api.transactions.destroy', $transaction->id) . '" method="post" onsubmit="return confirm('. __('Are you sure?') .')">
+                    <form class="display-inline-block" id="destroy_form" action="' . route('transactions.destroy', $transaction->id) . '" method="post" onsubmit="return confirm('. __('Are you sure?') .')">
                       <input type="hidden" name="_token" value="' . csrf_token() . '">
                       <input type="hidden" name="_method" value="DELETE">
                       <button class="normal-link" type="submit"><i class="feather icon-trash-2"></i></button>
@@ -135,6 +143,23 @@ class TransactionRepository
     return Transaction::find($transactionId);
   }
 
+  public function store()
+  {
+    $user_id = request()->user_id;
+    $transaction = Transaction::where('user_id', $user_id)->orderBy('invoice', 'desc')->first();
+    $invoice = $transaction ? $transaction->invoice + 1 : 1;
+    return Transaction::create([
+      'invoice' => $invoice,
+      'account_id' => request()->account_id,
+      'user_id' => $user_id,
+      'transaction_type_id' => request()->transaction_type_id,
+      'amount' => request()->amount,
+      'trans_date' => date('Y-m-d', strtotime(request()->trans_date)),
+      'created_at' => date('Y-m-d H:i:s')
+    ]);
+  }
+
+
   public function update($transactionId)
   {
     $transaction = Transaction::find($transactionId);
@@ -149,21 +174,5 @@ class TransactionRepository
   public function destroy($transactionId)
   {
     return Transaction::find($transactionId)->delete();
-  }
-
-  public function store()
-  {
-      $user_id = request()->user_id;
-      $transaction = Transaction::where('user_id', $user_id)->orderBy('invoice', 'desc')->first();
-      $invoice = $transaction ? $transaction->invoice + 1 : 1;
-    return Transaction::create([
-        'invoice' => $invoice,
-        'account_id' => request()->account_id,
-        'user_id' => $user_id,
-        'transaction_type_id' => request()->transaction_type_id,
-        'amount' => request()->amount,
-        'trans_date' => date('Y-m-d', strtotime(request()->trans_date)),
-        'created_at' => date('Y-m-d H:i:s')
-    ]);
   }
 }

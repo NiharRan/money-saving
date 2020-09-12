@@ -3,11 +3,15 @@
   "Dashboard": "ড্যাশবোর্ড",
   "Recent Transactions": "সাম্প্রতিক লেনদেন",
   "User": "ব্যবহারকারী",
-  "Member": "সদস্য",
   "Users": "ব্যবহারকারীরা",
   "Create New User": "নতুন ব্যবহারকারী তৈরি করুন",
   "User Info": "ব্যবহারকারীর তথ্য",
+
+  "Member": "সদস্য",
+  "Members": "সদস্য গুলো",
+
   "Name": "নাম",
+  "Slugan": "স্লোগান",
   "User name is required": "ইউজার নাম আবশ্যক",
   "User Name": "ব্যবহারকারীর নাম",
   "List": "তালিকা",
@@ -20,29 +24,75 @@
   "User mother name is required": "ব্যবহারকারীর মাতার নাম প্রয়োজন",
   "Father Name": "পিতার নাম",
   "User father name is required": "ব্যবহারকারীর পিতার নাম আবশ্যক",
+
   "Select One": "একটা নির্বাচন করুন",
+  "Select": "নির্বাচন করুন",
+
   "Account": "একাউন্ট",
+  "Accounts": "একাউন্ট গুলো",
+  "Create New Account": "নতুন একাউন্ট তৈরি করুন",
+  "Account Info": "একাউন্টের তথ্য",
+  "Edit :name Info": ":name এর তথ্য পরিবর্তন করুন",
+  "Update :name Info": ":name এর তথ্য পরিবর্তন করুন",
+  "Account name is required": "একাউন্টের নাম আবশ্যক",
+  "Account is required": "একাউন্ট আবশ্যক",
+
   "Role": "নিয়ম",
+  "Role name is required": "নিয়মের নাম আবশ্যক",
+  "Role is required": "নিয়ম আবশ্যক",
+
   "Account Type": "হিসাবের ধরন",
+  "Account type name is required": "হিসাবের ধরনের নাম আবশ্যক",
+  "Account type is required": "হিসাবের ধরন আবশ্যক",
+
   "Transaction": "লেনদেন",
+  "Transactions": "লেনদেন গুলো",
+
+  "Loan": "ঋণ",
+  "Loans": "ঋণ গুলো",
+
+
   "Transaction Type": "লেনদেনের ধরণ",
+  "Transaction type name is required": "লেনদেনের ধরণের নাম আবশ্যক",
+  "Transaction type is required": "লেনদেনের ধরণ আবশ্যক",
+
   "Transaction Date": "লেনদেনের তারিখ",
+  "Transaction date is required": "লেনদেনের তারিখ আবশ্যক",
+
   "Money Format": "অর্থের ধরণ",
+  "Money format name is required": "অর্থের ধরণের নাম আবশ্যক",
+  "Money format is required": "অর্থের ধরণ আবশ্যক",
+
   "Religion": "ধর্ম",
+  "Religion name is required": "ধর্মের নাম আবশ্যক",
   "Religion is required": "ধর্ম আবশ্যক",
+
   "Blood Group": "রক্তের গ্রুপ",
+  "Blood group name is required": "রক্তের গ্রুপের নাম আবশ্যক",
+  "Blood group is required": "রক্তের গ্রুপ আবশ্যক",
+
   "Gender": "লিঙ্গ",
+  "Gender name is required": "লিঙ্গের আবশ্যক",
   "Gender is required": "লিঙ্গ আবশ্যক",
+
   "Birth Date": "জন্ম তারিখ",
   "Birth date is required": "জন্ম তারিখ আবশ্যক",
+
   "Division": "বিভাগ",
+  "Division name is required": "বিভাগের নাম আবশ্যক",
   "Division is required": "বিভাগ আবশ্যক",
+
   "District": "জেলা",
+  "District name is required": "জেলাার নাম আবশ্যক",
   "District is required": "জেলা আবশ্যক",
+
   "Upazilla": "উপজেলা",
+  "Upazilla name is required": "উপজেলার নাম আবশ্যক",
   "Upazilla is required": "উপজেলা আবশ্যক",
+
   "Nationality": "জাতীয়তা",
   "Nationality is required": "জাতীয়তা আবশ্যক",
+
   "Email Address": "ইমেল ঠিকানা",
   "Village/House No.": "গ্রাম / বাড়ি নং",
   "User image is required": "ব্যবহারকারীর চিত্র আবশ্যক",
@@ -55,6 +105,7 @@
   "Status": "অবস্থা",
   "Invoice": "চালান",
   "Amount": "টাকার পরিমাণ",
+  "Amount is required": "টাকার পরিমাণ আবশ্যক",
   "Date": "তারিখ",
   "S.N.": "ক্রমিক নং.",
   "Action": "কর্ম",

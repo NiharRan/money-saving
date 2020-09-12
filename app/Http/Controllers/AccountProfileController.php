@@ -28,7 +28,7 @@ class AccountProfileController extends Controller
         'pageHeader' => true
       ];
       $breadcrumbs = [
-        ['link'=>"/",'name'=>"Home"],
+        ['link'=>"/",'name'=> __("Home")],
         ['name'=> $account->name],
       ];
       return view('/pages/accounts/profile', [

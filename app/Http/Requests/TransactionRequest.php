@@ -40,12 +40,12 @@ class TransactionRequest extends FormRequest
   public function messages()
   {
     return [
-      'account_id.required' => 'Account is required',
-      'user_id.required' => 'Account member is required',
-      'transaction_type_id.required' => 'Transaction type is required',
-      'amount.required' => 'Amount is required',
-      'trans_date.required' => 'Transaction date is required',
-      'amount.numeric' => 'Invalid amount',
+      'account_id.required' => __("Account is required"),
+      'user_id.required' => __("Account member is required"),
+      'transaction_type_id.required' => __("Transaction type is required"),
+      'amount.required' => __("Amount is required"),
+      'trans_date.required' => __("Transaction date is required"),
+      'amount.numeric' => __("Invalid amount"),
     ];
   }
 }
