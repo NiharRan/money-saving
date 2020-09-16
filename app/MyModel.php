@@ -23,8 +23,6 @@ class MyModel extends Model
     return date('d-m-Y', strtotime($this->updated_at));
   }
 
-  protected $appends = ['last_updated', 'default_date_time', 'default_date'];
-
   public static function scopeActive($query)
   {
     return $query->where('status', 1);

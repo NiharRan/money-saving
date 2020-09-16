@@ -4,7 +4,7 @@
         @include('panels.sidebar')
 
         <!-- BEGIN: Content-->
-        <div class="app-content content">
+        <div class="app-content content" id="app">
             <!-- BEGIN: Header-->
             <div class="content-overlay"></div>
             <div class="header-navbar-shadow"></div>
@@ -31,15 +31,20 @@
                 </div>
             @else
                 <div class="content-wrapper">
+                  @if(isset($config) && $config['vue'] === true)
+                    @yield('vue-content')
+                  @else
                     {{-- Include Breadcrumb --}}
                     @if($configData['pageHeader'] == true)
-                        @include('panels.breadcrumb')
+                      @include('panels.breadcrumb')
                     @endif
 
                     <div class="content-body">
-                        {{-- Include Page Content --}}
-                        @yield('content')
+                      {{-- Include Page Content --}}
+                      @yield('content')
                     </div>
+                  @endif
+
                 </div>
             @endif
 

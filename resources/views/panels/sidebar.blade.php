@@ -38,12 +38,19 @@
               </a>
             </li>
             <li class="">
-              <a href="/accounts">
+              <a href="{{ route('accounts.index') }}">
                 <i class="feather icon-circle"></i>
                 <span class="menu-title" data-i18n="">{{ __('List') }}</span>
               </a>
             </li>
           </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="/customers">
+            <i class="feather icon-users"></i>
+            <span class="menu-title" data-i18n="">{{ __('Customer') }}</span>
+          </a>
         </li>
       @endif
 

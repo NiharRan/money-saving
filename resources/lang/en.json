@@ -36,6 +36,17 @@
   "Account name is required": "Account name is required",
   "Account is required": "Account is required",
 
+  "Customer": "Customer",
+  "Customers": "Customers",
+  "Customer Info": "Customer Info",
+  "Create New Customer": "Create New Customer",
+  "Customer name is required": "Customer name is required",
+  "Customer is required": "Customer is required",
+
+  "Information saved successfully!": "Information saved successfully!",
+  "Information updated successfully!": "Information updated successfully!",
+  "Are you sure?": "Are you sure?",
+
   "Role": "Role",
   "Role name is required": "Role name is required",
   "Role is required": "Role is required",
@@ -97,9 +108,20 @@
   "Invalid file": "Invalid file",
   "Image must be with in jpeg, png, or jpg format": "Image must be with in jpeg, png, or jpg format",
   "Image must be less then :attribute": "Image must be less then :attribute",
+
   "Home": "Home",
   "Submit": "Submit",
+  "Edit": "Edit",
+  "Create": "Create",
+  "Update": "Update",
+
+  "You won't be able to revert this!": "You won't be able to revert this!",
+  "Data is safe :)": "Data is safe :)",
+
   "Permanent Address": "Permanent Address",
+  "Address": "Address",
+  "Address is required": "Address is required",
+
   "Invoice": "Invoice",
   "Status": "Status",
   "Amount": "Amount",

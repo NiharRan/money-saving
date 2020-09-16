@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AccountUpdateRequest;
 use App\Http\Requests\AccountCreateRequest;
 use App\Repositories\AccountRepository;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,14 +20,27 @@ class AccountController extends Controller
     }
 
   /**
+   * Display a listing of the resource.
+   *
+   * @param Request $request
+   * @return JsonResponse
+   */
+    public function index(Request $request)
+    {
+        $accounts = $this->accountRepository->dataTable($request);
+        return \response()->json($accounts);
+    }
+    /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function index()
+    public function search()
     {
-        return $this->accountRepository->accountDataInTable();
+      $data = $this->accountRepository->all()->get();
+      return \response()->json($data);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -42,17 +57,7 @@ class AccountController extends Controller
             $fileNameToStore = \time().'.'.$extension;
 
             //Upload File
-            $request->file('logo')->storeAs('public/accounts', $fileNameToStore);
-            $request->file('logo')->storeAs('public/accounts/thumbnail/small', $fileNameToStore);
-            $request->file('logo')->storeAs('public/accounts/thumbnail/medium', $fileNameToStore);
-
-            //create small thumbnail
-            $smallThumbnailPath = public_path('storage/accounts/thumbnail/small/'.$fileNameToStore);
-            $this->accountRepository->createThumbnail($smallThumbnailPath, 150, 93);
-
-            //create medium thumbnail
-            $mediumThumbnailPath = public_path('storage/accounts/thumbnail/medium/'.$fileNameToStore);
-            $this->accountRepository->createThumbnail($mediumThumbnailPath, 300, 185);
+            $this->accountRepository->uploadImage($fileNameToStore, $request);
 
             $account->logo = $fileNameToStore;
         }
@@ -73,11 +78,11 @@ class AccountController extends Controller
     {
         $account = $this->accountRepository->update($id);
         if ($request->hasFile('logo')) {
-            $originalImagePath = 'public/accounts/'.$account->logo;
-            $smallImagePath = 'public/accounts/thumbnail/small/'.$account->logo;
-            $mediumImagePath = 'public/accounts/thumbnail/medium/'.$account->logo;
             if ($account->logo != 'account.png') {
-                if (file_exists($originalImagePath)) {
+              $originalImagePath = 'public/accounts/'.$account->logo;
+              $mediumImagePath = 'public/accounts/thumbnail/medium/'.$account->logo;
+              $smallImagePath = 'public/accounts/thumbnail/small/'.$account->logo;
+              if (file_exists($originalImagePath)) {
                     Storage::delete($originalImagePath);
                 }
                 if (file_exists($smallImagePath)) {
@@ -93,17 +98,7 @@ class AccountController extends Controller
             $fileNameToStore = \time().'.'.$extension;
 
             //Upload File
-            $request->file('logo')->storeAs('public/accounts', $fileNameToStore);
-            $request->file('logo')->storeAs('public/accounts/thumbnail/small', $fileNameToStore);
-            $request->file('logo')->storeAs('public/accounts/thumbnail/medium', $fileNameToStore);
-
-            //create small thumbnail
-            $smallThumbnailPath = public_path('storage/accounts/thumbnail/small/'.$fileNameToStore);
-            $this->accountRepository->createThumbnail($smallThumbnailPath, 150, 93);
-
-            //create medium thumbnail
-            $mediumThumbnailPath = public_path('storage/accounts/thumbnail/medium/'.$fileNameToStore);
-            $this->accountRepository->createThumbnail($mediumThumbnailPath, 300, 185);
+            $this->accountRepository->uploadImage($fileNameToStore, $request);
 
             $account->logo = $fileNameToStore;
         }

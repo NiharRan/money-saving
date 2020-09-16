@@ -3,9 +3,11 @@
 namespace App;
 
 use App\Settings\AccountType;
+use JamesDordoy\LaravelVueDatatable\Traits\LaravelVueDatatableTrait;
 
 class Account extends MyModel
 {
+    use LaravelVueDatatableTrait;
     /**
      * The attributes that are mass assignable.
      *
@@ -14,6 +16,61 @@ class Account extends MyModel
     protected $fillable = [
         'name', 'slug', 'logo', 'slugan', 'account_type_id', 'money_format_id'
     ];
+
+  protected $dataTableColumns = [
+    'id' => [
+      'searchable' => false,
+    ],
+    'name' => [
+      'searchable' => true,
+    ],
+    'slugan' => [
+      'searchable' => true,
+    ],
+  ];
+  protected $dataTableRelationships = [
+    "belongsTo" => [
+      'account_type' => [
+        "model" => \App\Settings\AccountType::class,
+        'foreign_key' => 'account_type_id',
+        'columns' => [
+          'name' => [
+            'searchable' => true,
+            'orderable' => true,
+          ],
+        ],
+      ],
+      'money_format' => [
+        "model" => \App\Settings\MoneyFormat::class,
+        'foreign_key' => 'money_format_id',
+        'columns' => [
+          'name' => [
+            'searchable' => true,
+            'orderable' => true,
+          ],
+        ],
+      ],
+    ],
+    "belongsToMany" => [
+      "users" => [
+        "model" => \App\User::class,
+        "foreign_key" => "account_id",
+        "pivot" => [
+          "table_name" => "user_account",
+          "primary_key" => "id",
+          "foreign_key" => "user_id",
+          "local_key" => "account_id",
+        ],
+        "order_by" => "name",
+        "columns" => [
+          "name" => [
+            "searchable" => true,
+            "orderable" => true,
+          ]
+        ],
+      ],
+    ]
+  ];
 
     public function getCurrentStatusAttribute()
     {
@@ -37,14 +94,14 @@ class Account extends MyModel
         return "/storage/accounts/thumbnail/$this->logo";
     }
 
-    protected $appends = [
-        'current_status',
-        'last_updated',
-        'profile_url',
-        'logo_small',
-        'logo_medium',
-        'logo_original',
-    ];
+//    protected $appends = [
+//        'current_status',
+//        'last_updated',
+//        'profile_url',
+//        'logo_small',
+//        'logo_medium',
+//        'logo_original',
+//    ];
 
     public function scopeJoinAccount($query)
     {

@@ -8,6 +8,7 @@ use App\Repositories\Settings\TransactionTypeRepository;
 use App\Settings\AccountType;
 use App\Settings\TransactionType;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TransactionTypeController extends Controller
 {
@@ -20,19 +21,30 @@ class TransactionTypeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         return $this->transactionTypeRepository->transactionTypeDataInTable();
     }
 
+  /**
+   * Display a listing of the resource.
+   *
+   * @return Response
+   */
+  public function search()
+  {
+    $rows = $this->transactionTypeRepository->all()->get();
+    return response()->json($rows);
+  }
+
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(TransactionTypeRequest $request)
     {
@@ -45,7 +57,7 @@ class TransactionTypeController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -57,7 +69,7 @@ class TransactionTypeController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(TransactionTypeRequest $request, $id)
     {
@@ -72,7 +84,7 @@ class TransactionTypeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(TransactionType $transactionType)
     {

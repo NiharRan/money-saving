@@ -37,6 +37,17 @@
   "Account name is required": "একাউন্টের নাম আবশ্যক",
   "Account is required": "একাউন্ট আবশ্যক",
 
+  "Customer": "গ্রাহক",
+  "Customers": "গ্রাহক গুলো",
+  "Create New Customer": "নতুন গ্রাহক তৈরি করুন",
+  "Customer Info": "গ্রাহকের তথ্য",
+  "Customer name is required": "গ্রাএরের নাম আবশ্যক",
+  "Customer is required": "গ্রাহক আবশ্যক",
+
+  "Information saved successfully!": "তথ্য সফলভাবে সঞ্চিত হয়েছে!",
+  "Information updated successfully!": "তথ্য সফলভাবে আপডেট হয়েছে",
+  "Are you sure?": "আপনি কি নিশ্চিত?",
+
   "Role": "নিয়ম",
   "Role name is required": "নিয়মের নাম আবশ্যক",
   "Role is required": "নিয়ম আবশ্যক",
@@ -99,9 +110,19 @@
   "Invalid file": "অবৈধ ফাইল",
   "Image must be with in jpeg, png, or jpg format": "চিত্র অবশ্যই জেপেইগ, পিএনজি, বা জেপিজি ফর্ম্যাটে থাকতে হবে",
   "Image must be less then :attribute": "চিত্রটি অবশ্যই :attribute এর কম হবে",
+
   "Home": "প্রধান পাতা",
   "Submit": "সংরক্ষণ করুন",
+  "Edit": "পরিবর্তন করুন",
+  "Create": "তৈরি করুন",
+  "Update": "পরিবর্তন করুন",
+
+  "You won't be able to revert this!": "আপনি এটিকে ফিরিয়ে আনতে পারবেন না!",
+  "Data is safe :)": "ডেটা নিরাপদ :)",
+
   "Permanent Address": "স্থায়ী ঠিকানা",
+  "Address": "ঠিকানা",
+  "Address is required": "ঠিকানা আবশ্যক",
   "Status": "অবস্থা",
   "Invoice": "চালান",
   "Amount": "টাকার পরিমাণ",

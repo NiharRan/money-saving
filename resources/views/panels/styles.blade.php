@@ -1,8 +1,5 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600">
         <link rel="stylesheet" href="{{ asset('vendors/css/vendors.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('vendors/css/sweetalert/sweetalert2.css') }}">
-        <link rel="stylesheet" href="{{ asset('vendors/css/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('vendors/css/ui/prism.min.css') }}">
         {{-- Vendor Styles --}}
         @yield('vendor-style')
         {{-- Theme Styles --}}
@@ -12,6 +9,14 @@
         <link rel="stylesheet" href="{{ asset('css/components.css') }}">
         <link rel="stylesheet" href="{{ asset('css/themes/dark-layout.css') }}">
         <link rel="stylesheet" href="{{ asset('css/themes/semi-dark-layout.css') }}">
+
+        @if(isset($config) && $config['vue'] == true)
+          @yield('vue-css')
+        @else
+          <link rel="stylesheet" href="{{ asset('vendors/css/sweetalert/sweetalert2.css') }}">
+          <link rel="stylesheet" href="{{ asset('vendors/css/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+        @endif
+
 {{-- {!! Helper::applClasses() !!} --}}
 @php
 $configData = Helper::applClasses();
@@ -29,12 +34,15 @@ $configData = Helper::applClasses();
 @if($configData['mainLayoutType'] === 'horizontal')
         <link rel="stylesheet" href="{{ asset('css/core/menu/menu-types/horizontal-menu.css') }}">
 @endif
-        <link rel="stylesheet" href="{{ asset('css/core/menu/menu-types/vertical-menu.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/core/colors/palette-gradient.css') }}">
+<link rel="stylesheet" href="{{ asset('css/core/menu/menu-types/vertical-menu.css') }}">
+<link rel="stylesheet" href="{{ asset('css/core/colors/palette-gradient.css') }}">
+
 {{-- Page Styles --}}
-        @yield('page-style')
+@yield('page-style')
+
 {{-- Laravel Style --}}
-        <link rel="stylesheet" href="{{ asset('css/custom-laravel.css') }}">
+<link rel="stylesheet" href="{{ asset('css/custom-laravel.css') }}">
+
 {{-- Custom RTL Styles --}}
 @if($configData['direction'] === 'rtl')
         <link rel="stylesheet" href="{{ asset('css/custom-rtl.css') }}">

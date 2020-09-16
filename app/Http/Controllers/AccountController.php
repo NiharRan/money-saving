@@ -23,6 +23,10 @@ class AccountController extends Controller
      */
     public function index()
     {
+      $config = [
+        'text' => __('New'),
+        'vue' => true,
+      ];
       $pageConfigs = [
           'pageHeader' => true
         ];
@@ -31,7 +35,8 @@ class AccountController extends Controller
           ['name'=> __("Accounts")],
         ];
         return view('/pages/accounts/index', [
-          'breadcrumbs' => $breadcrumbs
+          'breadcrumbs' => $breadcrumbs,
+          'config' => $config,
         ]);
     }
 

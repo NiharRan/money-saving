@@ -20,6 +20,76 @@ class User extends Authenticatable
         'blood_group_id', 'religion_id', 'role_id', 'nationality',
         'password', 'email_verified_at', 'status'
     ];
+  protected $dates = [
+    'created_at',
+    'updated_at',
+  ];
+
+  protected $dataTableColumns = [
+    'id' => [
+      'searchable' => false,
+    ],
+    'name' => [
+      'searchable' => true,
+    ],
+    'phone' => [
+      'searchable' => true,
+    ],
+    'email' => [
+      'searchable' => true,
+    ],
+    'address' => [
+      'searchable' => true,
+    ],
+    'avatar' => [
+      'searchable' => false
+    ]
+  ];
+  protected $dataTableRelationships = [
+    "belongsTo" => [
+      'gender' => [
+        "model" => \App\Users\Gender::class,
+        'foreign_key' => 'gender_id',
+        'columns' => [
+          'name' => [
+            'searchable' => true,
+            'orderable' => true,
+          ],
+        ],
+      ],
+      'role' => [
+        "model" => \App\Settings\Role::class,
+        'foreign_key' => 'role_id',
+        'columns' => [
+          'name' => [
+            'searchable' => true,
+            'orderable' => true,
+          ],
+        ],
+      ],
+      'religion' => [
+        "model" => \App\Users\Religion::class,
+        'foreign_key' => 'religion_id',
+        'columns' => [
+          'name' => [
+            'searchable' => true,
+            'orderable' => true,
+          ],
+        ],
+      ],
+      'blood_group' => [
+        "model" => \App\Users\BloodGroup::class,
+        'foreign_key' => 'blood_group_id',
+        'columns' => [
+          'name' => [
+            'searchable' => true,
+            'orderable' => true,
+          ],
+        ],
+      ],
+    ],
+  ];
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -74,14 +144,14 @@ class User extends Authenticatable
       return "/storage/profiles/thumbnail/$this->avatar";
     }
 
-    protected $appends = [
-      'current_status',
-      'last_updated',
-      'profile_url',
-      'avatar_small',
-      'avatar_medium',
-      'avatar_original',
-    ];
+//    protected $appends = [
+//      'current_status',
+//      'last_updated',
+//      'profile_url',
+//      'avatar_small',
+//      'avatar_medium',
+//      'avatar_original',
+//    ];
 
     public function scopeActive($query)
     {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\MoneyFormatRequest;
 use App\Repositories\Settings\MoneyFormatRepository;
 use App\Settings\MoneyFormat;
+use Illuminate\Http\Response;
 
 class MoneyFormatController extends Controller
 {
@@ -18,19 +19,32 @@ class MoneyFormatController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        return $this->moneyFormatRepository->MoneyFormatDataInTable();
+        $money_formats = $this->moneyFormatRepository->all()->get();
+        return response()->json($money_formats);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function search()
+    {
+      $money_formats = $this->moneyFormatRepository->all()->get();
+      return response()->json($money_formats);
+    }
+
 
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(MoneyFormatRequest $request)
     {
@@ -43,7 +57,7 @@ class MoneyFormatController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -55,7 +69,7 @@ class MoneyFormatController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(MoneyFormatRequest $request, MoneyFormat $moneyFormat)
     {
@@ -70,7 +84,7 @@ class MoneyFormatController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(MoneyFormat $moneyFormat)
     {

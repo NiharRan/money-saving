@@ -22,8 +22,20 @@ class AccountTypeController extends Controller
      */
     public function index()
     {
-        return $this->accountTypeRepository->accountTypeDataInTable();
+        $account_types = $this->accountTypeRepository->all()->get();
+        return response()->json($account_types);
     }
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function search()
+  {
+    $account_types = $this->accountTypeRepository->all()->get();
+    return response()->json($account_types);
+  }
+
 
 
     /**

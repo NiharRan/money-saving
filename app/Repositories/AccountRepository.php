@@ -3,10 +3,12 @@ namespace App\Repositories;
 
 use App\Account;
 use App\Settings\TransactionType;
-use App\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\DataTables;
+use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
 
@@ -14,15 +16,28 @@ class AccountRepository
 {
 
   protected $guarded = [];
+
+  /**
+   * @return Builder
+   */
   public function all()
   {
-    return Account::with([
+    $accounts = Account::with([
       'account_type',
       'money_format',
       'users',
     ])->orderBy('name', 'asc');
+
+    if (request()->has('status')) {
+      $accounts = $accounts->where('status', request()->status);
+    }
+    return $accounts;
   }
 
+  /**
+   * @param $rowId
+   * @return Builder|Builder[]|Collection|Model|null
+   */
   public function findById($rowId)
   {
     return Account::with([
@@ -32,6 +47,10 @@ class AccountRepository
     ])->find($rowId);
   }
 
+  /**
+   * @param string $slug
+   * @return Builder|Model|object|null
+   */
   public function findBySlug(string $slug)
   {
     return Account::with([
@@ -40,90 +59,56 @@ class AccountRepository
       ->first();
   }
 
-  public function accountDataInTable()
+  /**
+   * @return string
+   */
+  public function dataTable(Request $request)
   {
-    try {
-      if (\auth()->user()->isSubscriber) {
-        $query = User::with([
-          'accounts',
-          'accounts.account_type',
-          'accounts.money_format'
-        ])->find(\auth()->id())->accounts;
-      }else {
-        $query = $this->all()->get();
-      }
-      return DataTables::of($query)
-        ->addColumn('name', function ($account) {
-          return '<div class="d-flex align-items-center">
-                     <div class="avatar p-0 m-0">
-                        <div class="avatar-content small">
-                            <a href="' . $account->profileUrl . '">
-                                <img style="width:100%" src="' . $account->logoSmall . '" alt="' . $account->name . '">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="info ml-2">
-                        <a class="text-primary" href="' . $account->profileUrl . '">' . $account->name . '</a>
-                        <p class="mb-0 pb-0 text-bold"><small>' . $account->account_type->name . '</small></p>
-                    </div>
-                  </div>';
-        })
-        ->addColumn('members', function ($account) {
-          $users = $account->users;
-          $output = '<ul class="list-unstyled users-list m-0  d-flex align-items-center">';
-          foreach ($users as $user) {
-            $output .= '<li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="'. $user->name .'" class="avatar pull-up">
-                        <img class="media-object rounded-circle" src="'. $user->smallAvatar .'" alt="Avatar" height="30" width="30">
-                      </li>';
-          }
-          $output .= '</ul>';
-          return $output;
-        })
-        ->addColumn('status', function ($account) {
-          $statusClass = $account->status == 1 ? 'icon-eye text-success' : 'icon-eye-off text-danger';
-          return "<span class='m-auto'><i class='feather $statusClass'></i></span>";
-        })
-        ->addColumn('action', function ($account) {
-          return '<a href="' . route('accounts.edit', $account->id) . '" class="action-edit"><i class="feather icon-edit"></i></a>
-                    <form class="display-inline-block" id="destroy_form" action="' . route('api.accounts.destroy', $account->id) . '" method="post" onsubmit="return confirm(\'Are you sure?\')">
-                      <input type="hidden" name="_token" value="' . csrf_token() . '">
-                      <input type="hidden" name="_method" value="DELETE">
-                      <button class="normal-link" type="submit"><i class="feather icon-trash-2"></i></button>
-                    </form>';
-        })
-        ->rawColumns([
-          'name',
-          'members',
-          'status',
-          'action'
-        ])->make(true);
-    } catch (\Exception $e) {
-      return $e->getMessage();
+    $query = Account::eloquentQuery(
+      $request->input('column'),
+      $request->input('dir'),
+      $request->input('search'),
+      [
+        "account_type",
+        "money_format",
+        "users",
+      ]
+    );
+
+    if (auth()->user()->isSubscriber) {
+      $userId = auth()->user()->id;
+      $query = $query->whereHas('users', function ($q) use ($userId) {
+        $q->where('users.id', $userId);
+      });
     }
+    $data = $query->paginate($request->input('length'));
+
+    return new DataTableCollectionResource($data);
   }
 
+  /**
+   * @return mixed
+   */
   public function store()
   {
-    $account = Account::create([
-      'name' => request()->name,
-      'slug' => Str::slug(request()->name),
-      'slugan' => request()->slugan,
-      'account_type_id' => request()->account_type_id,
-      'money_format_id' => request()->money_format_id,
-    ]);
-    $users = empty(request()->users) ? [] : explode(',', request()->users);
-    $users[] = auth()->user()->id;
-    if ($account) {
-      $account->users()->sync($users);
-    }
-    return $account;
+    $account = new Account;
+    return $this->setupData($account);
   }
 
+  /**
+   * @param $accountId
+   * @return mixed
+   */
   public function update($accountId)
   {
     $account = Account::find($accountId);
+    return $this->setupData($account);
+  }
+
+  public function setupData(Account $account)
+  {
     $account->name = request()->name;
-    $account->slug = Str::slug(request()->name);
+    $account->slug = make_slug(request()->name);
     $account->slugan = request()->slugan;
     $account->account_type_id = request()->account_type_id;
     $account->money_format_id = request()->money_format_id;
@@ -151,7 +136,12 @@ class AccountRepository
     $img->save($path);
   }
 
-    public function transactionsByType(Account $account, $user_id=null)
+  /**
+   * @param Account $account
+   * @param null $user_id
+   * @return mixed
+   */
+  public function transactionsByType(Account $account, $user_id=null)
     {
       $transactionTypes = TransactionType::active()->orderBy('name', 'asc')->get();
       foreach ($transactionTypes as $key => $transactionType) {
@@ -166,4 +156,20 @@ class AccountRepository
       }
       return $transactionTypes;
     }
+
+  public function uploadImage(string $fileNameToStore, $request)
+  {
+    $request->file('logo')->storeAs('public/accounts', $fileNameToStore);
+    $request->file('logo')->storeAs('public/accounts/thumbnail/small', $fileNameToStore);
+    $request->file('logo')->storeAs('public/accounts/thumbnail/medium', $fileNameToStore);
+
+    //create small thumbnail
+    $smallThumbnailPath = public_path('storage/accounts/thumbnail/small/'.$fileNameToStore);
+    $this->createThumbnail($smallThumbnailPath, 150, 93);
+
+    //create medium thumbnail
+    $mediumThumbnailPath = public_path('storage/accounts/thumbnail/medium/'.$fileNameToStore);
+    $this->createThumbnail($mediumThumbnailPath, 300, 185);
+  }
+
 }

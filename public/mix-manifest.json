@@ -1,4 +1,5 @@
 {
+    "/js/app.js": "/js/app.js",
     "/js/core/app.js": "/js/core/app.js",
     "/js/core/app-menu.js": "/js/core/app-menu.js",
     "/css/plugins/animate/animate.css": "/css/plugins/animate/animate.css",
@@ -68,6 +69,7 @@
     "/css/core/mixins/hex2rgb.css": "/css/core/mixins/hex2rgb.css",
     "/css/core/mixins/main-menu-mixin.css": "/css/core/mixins/main-menu-mixin.css",
     "/css/core/mixins/transitions.css": "/css/core/mixins/transitions.css",
+    "/css/app.css": "/css/app.css",
     "/css/bootstrap.css": "/css/bootstrap.css",
     "/css/bootstrap-extended.css": "/css/bootstrap-extended.css",
     "/css/colors.css": "/css/colors.css",

@@ -7,7 +7,9 @@ use App\Http\Requests\Users\UserCreateRequest;
 use App\Http\Requests\Users\UserUpdateRequest;
 use App\Repositories\UserRepository;
 use App\Settings\Role;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -19,21 +21,32 @@ class UserController extends Controller
     }
 
   /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+   * Display a listing of the resource.
+   *
+   * @param Request $request
+   * @return JsonResponse
+   */
+    public function index(Request $request)
     {
-        return $this->userRepository->userDataInTable();
+      $users = $this->userRepository->dataTable($request);
+      return \response()->json($users);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
+    public function search()
+    {
+        $users = $this->userRepository->all()->get();
+        return response()->json($users);
+    }
+
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param UserCreateRequest $request
+   * @return Response
+   */
     public function store(UserCreateRequest $request)
     {
         $role = Role::where('name', 'Subscriber')->first();
@@ -45,17 +58,7 @@ class UserController extends Controller
             $fileNameToStore = \time().'.'.$extension;
 
             //Upload File
-            $request->file('avatar')->storeAs('public/users', $fileNameToStore);
-            $request->file('avatar')->storeAs('public/users/thumbnail/small', $fileNameToStore);
-            $request->file('avatar')->storeAs('public/users/thumbnail/medium', $fileNameToStore);
-
-            //create small thumbnail
-            $smallThumbnailPath = public_path('storage/users/thumbnail/small/'.$fileNameToStore);
-            $this->userRepository->createThumbnail($smallThumbnailPath, 150, 93);
-
-            //create medium thumbnail
-            $mediumThumbnailPath = public_path('storage/users/thumbnail/medium/'.$fileNameToStore);
-            $this->userRepository->createThumbnail($mediumThumbnailPath, 300, 185);
+            $this->userRepository->uploadImage($fileNameToStore, $request);
 
             $user->avatar = $fileNameToStore;
         }
@@ -64,41 +67,39 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param UserUpdateRequest $request
+   * @param int $id
+   * @return Response
+   */
     public function update(UserUpdateRequest $request, $id)
     {
         $user = $this->userRepository->update($request, $id);
         // new image provided
         if ($request->hasFile('avatar')) {
-            $originalImagePath = 'public/users/'.$user->avatar;
-            $smallImagePath = 'public/users/thumbnail/small/'.$user->avatar;
-            $mediumImagePath = 'public/users/thumbnail/medium/'.$user->avatar;
-            Storage::delete($originalImagePath);
-            Storage::delete($smallImagePath);
-            Storage::delete($mediumImagePath);
+            if ($user->avatar !== 'default.jpg') {
+              $originalImagePath = 'public/users/'.$user->avatar;
+              $smallImagePath = 'public/users/thumbnail/small/'.$user->avatar;
+              $mediumImagePath = 'public/users/thumbnail/medium/'.$user->avatar;
+              if(file_exists($originalImagePath)) {
+                Storage::delete($originalImagePath);
+              }
+              if(file_exists($smallImagePath)) {
+                Storage::delete($smallImagePath);
+              }
+              if(file_exists($mediumImagePath)) {
+                Storage::delete($mediumImagePath);
+              }
+            }
 
             $extension = $request->file('avatar')->extension();
             //filename to store
             $fileNameToStore = \time().'.'.$extension;
 
             //Upload File
-            $request->file('avatar')->storeAs('public/users', $fileNameToStore);
-            $request->file('avatar')->storeAs('public/users/thumbnail/small', $fileNameToStore);
-            $request->file('avatar')->storeAs('public/users/thumbnail/medium', $fileNameToStore);
-
-            //create small thumbnail
-            $smallThumbnailPath = public_path('storage/users/thumbnail/small/'.$fileNameToStore);
-            $this->userRepository->createThumbnail($smallThumbnailPath, 150, 93);
-
-            //create medium thumbnail
-            $mediumThumbnailPath = public_path('storage/users/thumbnail/medium/'.$fileNameToStore);
-            $this->userRepository->createThumbnail($mediumThumbnailPath, 300, 185);
+            $this->userRepository->uploadImage($fileNameToStore, $request);
 
             $user->avatar = $fileNameToStore;
         }
@@ -111,7 +112,7 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

@@ -182,7 +182,8 @@ return [
 
         Yajra\Datatables\DatatablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-
+        App\Providers\TranslationServiceProvider::class,
+        JamesDordoy\LaravelVueDatatable\Providers\LaravelVueDatatableServiceProvider::class,
         /*
          * Application Service Providers...
          */
