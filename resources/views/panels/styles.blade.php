@@ -3,18 +3,18 @@
         {{-- Vendor Styles --}}
         @yield('vendor-style')
         {{-- Theme Styles --}}
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/bootstrap-extended.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/colors.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/components.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/themes/dark-layout.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/themes/semi-dark-layout.css') }}">
+        <link rel="stylesheet" href="/css/bootstrap.css">
+        <link rel="stylesheet" href="/css/bootstrap-extended.css">
+        <link rel="stylesheet" href="/css/colors.css">
+        <link rel="stylesheet" href="/css/components.css">
+        <link rel="stylesheet" href="/css/themes/dark-layout.css">
+        <link rel="stylesheet" href="/css/themes/semi-dark-layout.css">
 
         @if(isset($config) && $config['vue'] == true)
           @yield('vue-css')
         @else
-          <link rel="stylesheet" href="{{ asset('vendors/css/sweetalert/sweetalert2.css') }}">
-          <link rel="stylesheet" href="{{ asset('vendors/css/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+          <link rel="stylesheet" href="/vendors/css/sweetalert/sweetalert2.css">
+          <link rel="stylesheet" href="/vendors/css/bootstrap-datepicker/bootstrap-datepicker.min.css">
         @endif
 
 {{-- {!! Helper::applClasses() !!} --}}
@@ -32,18 +32,18 @@ $configData = Helper::applClasses();
 @endif --}}
 {{-- Page Styles --}}
 @if($configData['mainLayoutType'] === 'horizontal')
-        <link rel="stylesheet" href="{{ asset('css/core/menu/menu-types/horizontal-menu.css') }}">
+        <link rel="stylesheet" href="/css/core/menu/menu-types/horizontal-menu.css">
 @endif
-<link rel="stylesheet" href="{{ asset('css/core/menu/menu-types/vertical-menu.css') }}">
-<link rel="stylesheet" href="{{ asset('css/core/colors/palette-gradient.css') }}">
+<link rel="stylesheet" href="/css/core/menu/menu-types/vertical-menu.css">
+<link rel="stylesheet" href="/css/core/colors/palette-gradient.css">
 
 {{-- Page Styles --}}
 @yield('page-style')
 
 {{-- Laravel Style --}}
-<link rel="stylesheet" href="{{ asset('css/custom-laravel.css') }}">
+<link rel="stylesheet" href="/css/custom-laravel.css">
 
 {{-- Custom RTL Styles --}}
 @if($configData['direction'] === 'rtl')
-        <link rel="stylesheet" href="{{ asset('css/custom-rtl.css') }}">
+        <link rel="stylesheet" href="/css/custom-rtl.css">
 @endif

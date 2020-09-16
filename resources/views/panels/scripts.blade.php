@@ -5,17 +5,17 @@
    ]) !!};
 </script>
 {{-- Vendor Scripts --}}
-<script src="{{ asset('vendors/js/vendors.min.js') }}"></script>
+<script src="/vendors/js/vendors.min.js"></script>
 @yield('vendor-script')
 
 {{-- Theme Scripts --}}
-<script src="{{ asset('js/core/app-menu.js') }}"></script>
-<script src="{{ asset('js/core/app.js') }}"></script>
-<script src="{{ asset('js/scripts/customizer.js') }}"></script>
-<script src="{{ asset('js/scripts/components.js') }}"></script>
+<script src="/js/core/app-menu.js"></script>
+<script src="/js/core/app.js"></script>
+<script src="/js/scripts/customizer.js"></script>
+<script src="/js/scripts/components.js"></script>
 
 @if($configData['blankPage'] == false)
-    <script src="{{ asset('js/scripts/footer.js') }}"></script>
+    <script src="/js/scripts/footer.js"></script>
 @endif
 
 <script>
@@ -33,9 +33,9 @@
 @if(isset($config) && $config['vue'] == true)
   @yield('vue-js')
 @else
-  <script src="{{ asset('vendors/js/axios.min.js') }}"></script>
-  <script src="{{ asset('vendors/js/sweetalert2.js') }}"></script>
-  <script src="{{ asset('vendors/js/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+  <script src="/vendors/js/axios.min.js"></script>
+  <script src="/vendors/js/sweetalert2.js"></script>
+  <script src="/vendors/js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 @endif
 
 <script>
