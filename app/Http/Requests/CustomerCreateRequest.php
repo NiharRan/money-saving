@@ -27,13 +27,12 @@ class CustomerCreateRequest extends FormRequest
             'name' => 'required',
             'address' => 'required',
             'phone' => 'required|unique:customers',
-            'gender'       => 'required',
-            'account'      => 'required',
-            'religion'     => 'required',
-            'division'     => 'required',
-            'district'     => 'required',
-            'upazilla'     => 'required',
-            'avatar'          => 'required|image|mimes:jpeg,png,jpg|max:2048'
+            'gender_id'       => 'required',
+            'account_id'      => 'required',
+            'religion_id'     => 'required',
+            'division_id'     => 'required',
+            'district_id'     => 'required',
+            'upazilla_id'     => 'required',
         ];
     }
 
@@ -48,19 +47,14 @@ class CustomerCreateRequest extends FormRequest
         'name.required' => __("Customer name is required"),
         'address.required' => __("Address is required"),
         'phone.required' => __("Contact no. is required"),
-        'gender.required' => __("Gender is required"),
-        'account.required' => __("Account is required"),
-        'religion.required' => __("Religion is required"),
-        'division.required' => __("Division is required"),
-        'district.required' => __("District is required"),
-        'upazilla.required' => __("Upazilla is required"),
+        'gender_id.required' => __("Gender is required"),
+        'account_id.required' => __("Account is required"),
+        'religion_id.required' => __("Religion is required"),
+        'division_id.required' => __("Division is required"),
+        'district_id.required' => __("District is required"),
+        'upazilla_id.required' => __("Upazilla is required"),
 
         'phone.unique' => __("This contact no. is already used"),
-
-        'avatar.required' => __("User image is required"),
-        'avatar.image' => __("Invalid file"),
-        'avatar.mimes' => __("Image must be with in jpeg, png, or jpg format"),
-        'avatar.max' => __("Image must be less then 2mb")
       ];
     }
 }

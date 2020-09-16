@@ -5,15 +5,14 @@
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content modal-lg">
           <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLabel">{{ editMode ? `${form.name}'এর তথ্য পরিবর্তন করুন` : 'নতুন ব্যবহারকারী তৈরি করুন' }}</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h3 class="modal-title" id="exampleModalLabel">{{ editMode ? __('') : __('Create New Customer') }}</h3>
+            <button type="button" class="close" @click="closeModal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="card-body">
             <form
               @submit.prevent="storeOrUpdate"
-              @keydown="form.onKeydown($event)"
               method="POST"
               autocomplete="off">
               <div class="row">
@@ -29,10 +28,10 @@
                               type="text"
                               v-model="form.name"
                               class="form-control"
-                              :class="{'is-invalid': form.errors.has('name')}"
+                              :class="{'is-invalid': errors.name}"
                               :placeholder="__('Name')">
-                            <div v-if="form.errors.has('name')" class="alert p-0 mt-1 alert-danger" role="alert">
-                              <strong>{{ form.errors.get('name') }}</strong>
+                            <div v-if="errors.name" class="alert p-0 mt-1 alert-danger" role="alert">
+                              <strong>{{ errors.name }}</strong>
                             </div>
                           </div>
                           <div class="col-12 col-md-6">
@@ -41,10 +40,10 @@
                               type="text"
                               v-model="form.phone"
                               class="form-control"
-                              :class="{'is-invalid': form.errors.has('phone')}"
+                              :class="{'is-invalid': errors.phone}"
                               :placeholder="__('Contact No.')">
-                            <div v-if="form.errors.has('phone')" class="alert p-0 mt-1 alert-danger" role="alert">
-                              <strong>{{ form.errors.get('phone') }}</strong>
+                            <div v-if="errors.phone" class="alert p-0 mt-1 alert-danger" role="alert">
+                              <strong>{{ errors.phone }}</strong>
                             </div>
                           </div>
                         </div>
@@ -57,13 +56,13 @@
                               label="name"
                               track-by="name"
                               :searchable="true"
-                              :class="{'is-invalid': form.errors.has('gender')}"
+                              :class="{'is-invalid': errors.gender_id}"
                               :close-on-select="true"
                               :show-labels="false"
                               :placeholder=" __('Select One') ">
                             </multi-select>
-                            <div v-if="form.errors.has('gender')" class="alert p-0 mt-1 alert-danger" role="alert">
-                              <strong>{{ form.errors.get('gender') }}</strong>
+                            <div v-if="errors.gender_id" class="alert p-0 mt-1 alert-danger" role="alert">
+                              <strong>{{ errors.gender_id }}</strong>
                             </div>
                           </div>
                           <div class="col-12 col-md-6">
@@ -74,13 +73,13 @@
                               label="name"
                               track-by="name"
                               :searchable="true"
-                              :class="{'is-invalid': form.errors.has('account')}"
+                              :class="{'is-invalid': errors.account_id}"
                               :close-on-select="true"
                               :show-labels="false"
                               :placeholder=" __('Select One') ">
                             </multi-select>
-                            <div v-if="form.errors.has('account')" class="alert p-0 mt-1 alert-danger" role="alert">
-                              <strong>{{ form.errors.get('account') }}</strong>
+                            <div v-if="errors.account_id" class="alert p-0 mt-1 alert-danger" role="alert">
+                              <strong>{{ errors.account_id }}</strong>
                             </div>
                           </div>
                         </div>
@@ -94,13 +93,13 @@
                               label="name"
                               track-by="name"
                               :searchable="true"
-                              :class="{'is-invalid': form.errors.has('religion')}"
+                              :class="{'is-invalid': errors.religion_id}"
                               :close-on-select="true"
                               :show-labels="false"
                               :placeholder=" __('Select One') ">
                             </multi-select>
-                            <div v-if="form.errors.has('religion')" class="alert p-0 mt-1 alert-danger" role="alert">
-                              <strong>{{ form.errors.get('religion') }}</strong>
+                            <div v-if="errors.religion_id" class="alert p-0 mt-1 alert-danger" role="alert">
+                              <strong>{{ errors.religion_id }}</strong>
                             </div>
                           </div>
                           <div class="col-12 col-md-6">
@@ -109,7 +108,7 @@
                               type="email"
                               v-model="form.email"
                               class="form-control"
-                              :class="{'is-invalid': form.errors.has('email')}"
+                              :class="{'is-invalid': errors.email}"
                               :placeholder="__('Email Address')">
                           </div>
                         </div>
@@ -123,8 +122,8 @@
                             <input id="image" type="file" @change="selectImage" name="avatar" class="hidden"/>
                           </label>
                         </div>
-                        <div v-if="form.errors.has('avatar')" class="alert p-0 mt-1 alert-danger" role="alert">
-                          <strong>{{ form.errors.get('avatar') }}</strong>
+                        <div v-if="errors.avatar" class="alert p-0 mt-1 alert-danger" role="alert">
+                          <strong>{{ errors.avatar }}</strong>
                         </div>
                       </div>
                     </div>
@@ -141,14 +140,14 @@
                         label="name"
                         track-by="name"
                         :searchable="true"
-                        :class="{'is-invalid': form.errors.has('division')}"
+                        :class="{'is-invalid': errors.division_id}"
                         :close-on-select="true"
                         :show-labels="false"
                         :placeholder=" __('Select One') "
                         @input="$emit('fetchDistricts')">
                       </multi-select>
-                      <div v-if="form.errors.has('division')" class="alert p-0 mt-1 alert-danger" role="alert">
-                        <strong>{{ form.errors.get('division') }}</strong>
+                      <div v-if="errors.division_id" class="alert p-0 mt-1 alert-danger" role="alert">
+                        <strong>{{ errors.division_id }}</strong>
                       </div>
                     </div>
                     <div class="col-12 col-md-3">
@@ -159,14 +158,14 @@
                         label="name"
                         track-by="name"
                         :searchable="true"
-                        :class="{'is-invalid': form.errors.has('district')}"
+                        :class="{'is-invalid': errors.district_id}"
                         :close-on-select="true"
                         :show-labels="false"
                         :placeholder=" __('Select One') "
                         @input="$emit('fetchUpazillas')">
                       </multi-select>
-                      <div v-if="form.errors.has('district')" class="alert p-0 mt-1 alert-danger" role="alert">
-                        <strong>{{ form.errors.get('district') }}</strong>
+                      <div v-if="errors.district_id" class="alert p-0 mt-1 alert-danger" role="alert">
+                        <strong>{{ errors.district_id }}</strong>
                       </div>
                     </div>
                     <div class="col-12 col-md-3">
@@ -177,13 +176,13 @@
                         label="name"
                         track-by="name"
                         :searchable="true"
-                        :class="{'is-invalid': form.errors.has('upazilla')}"
+                        :class="{'is-invalid': errors.upazilla_id}"
                         :close-on-select="true"
                         :show-labels="false"
                         :placeholder=" __('Select One') ">
                       </multi-select>
-                      <div v-if="form.errors.has('upazilla')" class="alert p-0 mt-1 alert-danger" role="alert">
-                        <strong>{{ form.errors.get('upazilla') }}</strong>
+                      <div v-if="errors.upazilla_id" class="alert p-0 mt-1 alert-danger" role="alert">
+                        <strong>{{ errors.upazilla_id }}</strong>
                       </div>
                     </div>
 
@@ -193,10 +192,10 @@
                         type="text"
                         v-model="form.address"
                         class="form-control"
-                        :class="{'is-invalid': form.errors.has('address')}"
+                        :class="{'is-invalid': errors.address}"
                         :placeholder="__('Village/House No.')">
-                      <div v-if="form.errors.has('address')" class="alert p-0 mt-1 alert-danger" role="alert">
-                        <strong>{{ form.errors.get('address') }}</strong>
+                      <div v-if="errors.address" class="alert p-0 mt-1 alert-danger" role="alert">
+                        <strong>{{ errors.address }}</strong>
                       </div>
                     </div>
                   </div>
@@ -216,7 +215,7 @@
 
 <script>
   export default {
-    props: ['form', 'errors', 'accounts', 'genders', 'religions', 'divisions', 'districts', 'upazillas', 'editMode'],
+    props: ['form', 'accounts', 'genders', 'religions', 'divisions', 'districts', 'upazillas', 'editMode'],
     data() {
       return {
       }
@@ -230,34 +229,95 @@
         }
       },
       store: async function () {
-        const {data} = await this.form.post('/api/customers');
-        this.$swal({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000,
-          icon: 'success',
-          type: 'success',
-          title: 'Congratulations',
-          text: data.success,
-        });
-        this.closeModal();
-        this.$emit('refreshPage');
+        let formData = new FormData;
+        formData.append('name', this.form.name);
+        formData.append('phone', this.form.phone);
+        formData.append('avatar', this.form.avatar);
+        formData.append('address', this.form.address);
+
+        const gender_id = this.form.gender !== null ?
+          this.form.gender.id : '';
+        formData.append('gender_id', gender_id);
+
+        const account_id = this.form.account !== null ?
+          this.form.account.id : '';
+        formData.append('account_id', account_id);
+
+        const religion_id = this.form.religion !== null ?
+          this.form.religion.id : '';
+        formData.append('religion_id', religion_id);
+
+        const division_id = this.form.division !== null ?
+          this.form.division.id : '';
+        formData.append('division_id', division_id);
+
+        const district_id = this.form.district !== null ?
+          this.form.district.id : '';
+        formData.append('district_id', district_id);
+
+        const upazilla_id = this.form.upazilla !== null ?
+          this.form.upazilla.id : '';
+        formData.append('upazilla_id', upazilla_id);
+
+        try {
+          const {data} = await axios.post('/api/customers', formData);
+          this.showToast(data.success);
+          this.closeModal();
+          this.$emit('refreshPage');
+        }catch (error) {
+          this.fillErrors(error.response.data.errors);
+        }
       },
       update: async function () {
-        const {data} = await this.form.post(`/api/customers/${this.form.id}`);
+        let formData = new FormData;
+        formData.append('name', this.form.name);
+        formData.append('phone', this.form.phone);
+        formData.append('avatar', this.form.avatar);
+        formData.append('address', this.form.address);
+
+        const gender_id = this.form.gender !== null ?
+          this.form.gender.id : '';
+        formData.append('gender_id', gender_id);
+
+        const account_id = this.form.account !== null ?
+          this.form.account.id : '';
+        formData.append('account_id', account_id);
+
+        const religion_id = this.form.religion !== null ?
+          this.form.religion.id : '';
+        formData.append('religion_id', religion_id);
+
+        const division_id = this.form.division !== null ?
+          this.form.division.id : '';
+        formData.append('division_id', division_id);
+
+        const district_id = this.form.district !== null ?
+          this.form.district.id : '';
+        formData.append('district_id', district_id);
+
+        const upazilla_id = this.form.upazilla !== null ?
+          this.form.upazilla.id : '';
+        formData.append('upazilla_id', upazilla_id);
+        try {
+          const {data} = await axios.post(`/api/customers/${this.form.id}`, formData);
+          this.showToast(data.success);
+          this.closeModal();
+          this.$emit('refreshPage');
+        }catch (error) {
+          this.fillErrors(error.response.data.errors);
+        }
+      },
+      showToast: function (text, title = 'Congratulations', icon = 'success', type = 'success') {
         this.$swal({
           toast: true,
           position: 'top-end',
           showConfirmButton: false,
           timer: 3000,
-          icon: 'success',
-          type: 'success',
-          title: 'Congratulations',
-          text: data.success,
+          icon: icon,
+          type: type,
+          title: title,
+          text: text,
         });
-        this.closeModal();
-        this.$emit('refreshPage');
       },
       selectImage: function (e) {
         const file = e.target.files[0];
@@ -265,7 +325,7 @@
         this.form.avatar = file;
       },
       closeModal: function () {
-        this.form.reset();
+        this.errors = {};
         $("#modal").modal('hide')
       }
     },

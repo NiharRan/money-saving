@@ -23,7 +23,7 @@
   window._translations = {!! cache('translations') !!};
   window.auth = {!! auth()->user() !!};
   window.text = '{{ isset($config) ? $config['text'] : '' }}';
-  @if(isset($config) && $config['vue'] === true)
+  @if(isset($config) && $config['vue'] === true && isset($breadcrumbs))
     window.breadcrumbs = @json($breadcrumbs)
   @else
      window.breadcrumbs = [];

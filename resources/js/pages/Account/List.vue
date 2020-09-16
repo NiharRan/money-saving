@@ -27,6 +27,7 @@
           :money_formats="money_formats"
           :users="users"
           :editMode="editMode"
+          :isDisabled="isDisabled"
           v-on:refreshPage="reloadTable"
         ></account-model>
 
@@ -44,7 +45,6 @@
     import Breadcrumb from "../../panels/Breadcrumb";
     import ButtonGroup from "../../components/ButtonGroup";
     import AccountModel from './Model';
-    import Form from "../../plugins/form";
     import Loading from 'vue-loading-overlay';
     import 'vue-loading-overlay/dist/vue-loading.css';
     import swal from '../../plugins/sweetalert';
@@ -83,18 +83,19 @@
               },
               {
                 label: this.__('Account Type'),
-                name: 'account_types.name',
+                name: 'account_type.name',
                 columnName: 'account_types.name',
                 orderable: true,
               },
               {
                 label: this.__('Money Format'),
-                name: 'money_formats.name',
+                name: 'money_format.name',
                 columnName: 'money_formats.name',
                 orderable: true,
               },
               {
                 label: this.__('Action'),
+                classes: "text-center",
                 orderable: false,
                 editText: this.__('Edit'),
                 event: "click",
@@ -103,7 +104,7 @@
               },
             ],
             data: {},
-            form: new Form({
+            form: {
               id: '',
               name: '',
               logo: null,
@@ -112,12 +113,13 @@
               money_format: null,
               users: [],
               slugan: '',
-            }),
+            },
             account_types: [],
             money_formats: [],
             users: [],
             editMode: false,
             isLoading: false,
+            isDisabled: true,
           }
         },
       methods: {
@@ -138,6 +140,9 @@
           }
         },
         showModal: function (data) {
+          if (typeof data.account_type.name !== "undefined" && data.account_type.name === 'Join') {
+            this.isDisabled = false;
+          }
           this.editMode = true;
           this.form.id = data.id;
           this.form.name = data.name;
@@ -145,6 +150,7 @@
           this.form.imageUrl =`/storage/accounts/${data.logo}`;
           this.form.account_type = data.account_type;
           this.form.money_format = data.money_format;
+          this.form.users = data.users;
           $("#modal").modal('show')
         },
         getData: async function (url = this.url, options = this.tableProps) {

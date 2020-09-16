@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
-use Yajra\DataTables\DataTables;
 use Intervention\Image\Facades\Image;
 
 class UserRepository
@@ -74,48 +73,6 @@ class UserRepository
       },
     ])->where('slug', $slug)
       ->first();
-  }
-
-  public function userDataInTable()
-  {
-    try {
-      return DataTables::of($this->all()->get())
-        ->addColumn('name', function ($user) {
-          return '<div class="d-flex align-items-center">
-                     <div class="avatar p-0 m-0">
-                        <div class="avatar-content small">
-                            <a href="' . $user->profileUrl . '">
-                                <img style="width:100%" src="' . $user->avatarSmall . '" alt="' . $user->name . '">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="info ml-2">
-                        <a class="text-primary" href="' . $user->profileUrl . '">' . $user->name . '</a>
-                        <p class="mb-0 pb-0 text-bold"><small>' . $user->role->name . '</small></p>
-                    </div>
-                  </div>';
-        })
-        ->addColumn('status', function ($user) {
-          $statusClass = $user->status == 1 ? 'icon-eye text-success' : 'icon-eye-off text-danger';
-          return "<span class='m-auto'><i class='feather $statusClass'></i></span>";
-        })
-        ->addColumn('action', function ($user) {
-          return '<a href="' . route('users.edit', $user->id) . '" class="action-edit"><i class="feather icon-edit"></i></a>
-                  <a title="See all courses of ' . $user->name . '" href="" target="_blank" class="action-list"><i class="feather icon-list"></i></a>
-                    <form class="display-inline-block" id="destroy_form" action="' . route('api.users.destroy', $user->id) . '" method="post" onsubmit="return confirm(\'Are you sure?\')">
-                      <input type="hidden" name="_token" value="' . csrf_token() . '">
-                      <input type="hidden" name="_method" value="DELETE">
-                      <button class="normal-link" type="submit"><i class="feather icon-trash-2"></i></button>
-                    </form>';
-        })
-        ->rawColumns([
-          'name',
-          'status',
-          'action'
-        ])->make(true);
-    } catch (\Exception $e) {
-      return $e->getMessage();
-    }
   }
 
   public function store(Request $request)

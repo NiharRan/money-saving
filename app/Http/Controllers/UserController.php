@@ -9,6 +9,7 @@ use App\Users\Gender;
 use App\Users\Religion;
 use App\Settings\Role;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -21,7 +22,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -40,7 +41,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -72,7 +73,7 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -83,7 +84,7 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -96,9 +97,9 @@ class UserController extends Controller
         'pageHeader' => true
       ];
       $breadcrumbs = [
-        ['link'=>"/",'name'=>"Home"],
-        ['link' => '/users','name'=>"Users"],
-        ['name' => "Update $user->name's Information"]
+        ['link'=>"/",'name'=>__('Home')],
+        ['link' => '/users','name'=> __('Users')],
+        ['name' => __('Update Information')]
       ];
       return view('/pages/users/edit', [
         'pageConfigs' => $pageConfigs,

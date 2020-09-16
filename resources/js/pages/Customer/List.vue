@@ -49,7 +49,6 @@
     import Breadcrumb from "../../panels/Breadcrumb";
     import ButtonGroup from "../../components/ButtonGroup";
     import UserModel from './Model';
-    import Form from "../../plugins/form";
     import Loading from 'vue-loading-overlay';
     import 'vue-loading-overlay/dist/vue-loading.css';
     import swal from '../../plugins/sweetalert';
@@ -120,7 +119,7 @@
               },
             ],
             data: {},
-            form: new Form({
+            form: {
               id: '',
               name: '',
               phone: '',
@@ -134,7 +133,7 @@
               district: null,
               upazilla: null,
               address: ''
-            }),
+            },
             accounts: [],
             genders: [],
             religions: [],

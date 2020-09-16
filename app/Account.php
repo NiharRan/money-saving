@@ -25,8 +25,11 @@ class Account extends MyModel
       'searchable' => true,
     ],
     'slugan' => [
-      'searchable' => true,
+      'searchable' => false,
     ],
+    'logo' => [
+      'searchable' => false,
+    ]
   ];
   protected $dataTableRelationships = [
     "belongsTo" => [

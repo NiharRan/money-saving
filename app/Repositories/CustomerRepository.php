@@ -105,12 +105,12 @@ class CustomerRepository
     $customer->slug = make_slug($request->name);
     $customer->phone = $request->phone;
     $customer->email = $request->email;
-    $customer->account_id = $request->account['id'];
-    $customer->gender_id = $request->gender['id'];
-    $customer->religion_id = $request->religion['id'];
-    $customer->division_id = $request->division['id'];
-    $customer->district_id = $request->district['id'];
-    $customer->upazilla_id = $request->upazilla['id'];
+    $customer->account_id = $request->account_id;
+    $customer->gender_id = $request->gender_id;
+    $customer->religion_id = $request->religion_id;
+    $customer->division_id = $request->division_id;
+    $customer->district_id = $request->district_id;
+    $customer->upazilla_id = $request->upazilla_id;
     $customer->address = $request->address;
 
     return $customer;

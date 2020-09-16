@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\AccountTypeRequest;
 use App\Repositories\Settings\AccountTypeRepository;
 use App\Settings\AccountType;
+use Illuminate\Http\Response;
 
 class AccountTypeController extends Controller
 {
@@ -18,7 +19,7 @@ class AccountTypeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -28,7 +29,7 @@ class AccountTypeController extends Controller
   /**
    * Display a listing of the resource.
    *
-   * @return \Illuminate\Http\Response
+   * @return Response
    */
   public function search()
   {
@@ -42,7 +43,7 @@ class AccountTypeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(AccountTypeRequest $request)
     {
@@ -55,7 +56,7 @@ class AccountTypeController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -67,7 +68,7 @@ class AccountTypeController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(AccountTypeRequest $request, AccountType $accountType)
     {
@@ -82,7 +83,7 @@ class AccountTypeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(AccountType $accountType)
     {

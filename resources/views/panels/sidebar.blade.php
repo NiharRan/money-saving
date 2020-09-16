@@ -25,25 +25,11 @@
 
 
       @if (auth()->user()->is_subscriber)
-        <li class="nav-item has-sub">
-          <a href="">
+        <li class="nav-item">
+          <a href="/accounts">
             <i class="feather icon-users"></i>
             <span class="menu-title" data-i18n="">{{ __('Account') }}</span>
           </a>
-          <ul class="menu-content" style="">
-            <li class="">
-              <a href="/accounts/create">
-                <i class="feather icon-plus"></i>
-                <span class="menu-title" data-i18n="">{{ __('New') }}</span>
-              </a>
-            </li>
-            <li class="">
-              <a href="{{ route('accounts.index') }}">
-                <i class="feather icon-circle"></i>
-                <span class="menu-title" data-i18n="">{{ __('List') }}</span>
-              </a>
-            </li>
-          </ul>
         </li>
 
         <li class="nav-item">

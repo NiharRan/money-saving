@@ -5,21 +5,20 @@
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content modal-lg">
           <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLabel">{{ editMode ? `${form.name}'এর তথ্য পরিবর্তন করুন` : 'নতুন ব্যবহারকারী তৈরি করুন' }}</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h3 class="modal-title" id="exampleModalLabel">{{ editMode ? __(`Update Information`) : __('Create New Account') }}</h3>
+            <button type="button" class="close" @click="closeModal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="card-body">
             <form
               @submit.prevent="storeOrUpdate"
-              @keydown="form.onKeydown($event)"
               method="POST"
               autocomplete="off">
               <div class="row">
                 <div class="col-12">
                   <div class="border rounded px-1">
-                    <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i class="fa fa-info-circle mr-50 "></i> {{ __("Customer Info") }}</h6>
+                    <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i class="fa fa-info-circle mr-50 "></i> {{ __("Account Info") }}</h6>
                     <div class="row">
                       <div class="col-12 col-md-8">
                         <div class="form-group row">
@@ -29,23 +28,19 @@
                               type="text"
                               v-model="form.name"
                               class="form-control"
-                              :class="{'is-invalid': form.errors.has('name')}"
+                              :class="{'is-invalid': errors.name}"
                               :placeholder="__('Name')">
-                            <div v-if="form.errors.has('name')" class="alert p-0 mt-1 alert-danger" role="alert">
-                              <strong>{{ form.errors.get('name') }}</strong>
+                            <div v-if="errors.name" class="alert p-0 mt-1 alert-danger" role="alert">
+                              <strong>{{ errors.name }}</strong>
                             </div>
                           </div>
                           <div class="col-12 col-md-6">
-                            <label>{{ __("Slugan") }} <span class="text-danger">*</span></label>
+                            <label>{{ __("Slugan") }}</label>
                             <input
                               type="text"
-                              v-model="form.phone"
+                              v-model="form.slugan"
                               class="form-control"
-                              :class="{'is-invalid': form.errors.has('phone')}"
                               :placeholder="__('Slugan')">
-                            <div v-if="form.errors.has('phone')" class="alert p-0 mt-1 alert-danger" role="alert">
-                              <strong>{{ form.errors.get('phone') }}</strong>
-                            </div>
                           </div>
                         </div>
                         <div class="form-group row">
@@ -57,13 +52,13 @@
                               label="name"
                               track-by="name"
                               :searchable="true"
-                              :class="{'is-invalid': form.errors.has('money_format')}"
+                              :class="{'is-invalid': errors.money_format_id}"
                               :close-on-select="true"
                               :show-labels="false"
                               :placeholder=" __('Select One') ">
                             </multi-select>
-                            <div v-if="form.errors.has('money_format')" class="alert p-0 mt-1 alert-danger" role="alert">
-                              <strong>{{ form.errors.get('money_format') }}</strong>
+                            <div v-if="errors.money_format_id" class="alert p-0 mt-1 alert-danger" role="alert">
+                              <strong>{{ errors.money_format_id }}</strong>
                             </div>
                           </div>
                           <div class="col-12 col-md-6">
@@ -74,13 +69,15 @@
                               label="name"
                               track-by="name"
                               :searchable="true"
-                              :class="{'is-invalid': form.errors.has('account_type')}"
+                              :disabled="editMode && !isDisabled"
+                              :class="{'is-invalid': errors.account_type_id}"
                               :close-on-select="true"
                               :show-labels="false"
+                              @input="checkAccountStatus"
                               :placeholder=" __('Select One') ">
                             </multi-select>
-                            <div v-if="form.errors.has('account_type')" class="alert p-0 mt-1 alert-danger" role="alert">
-                              <strong>{{ form.errors.get('account_type') }}</strong>
+                            <div v-if="errors.account_type_id" class="alert p-0 mt-1 alert-danger" role="alert">
+                              <strong>{{ errors.account_type_id }}</strong>
                             </div>
                           </div>
                         </div>
@@ -95,13 +92,14 @@
                               label="name"
                               track-by="name"
                               :searchable="true"
-                              :class="{'is-invalid': form.errors.has('users')}"
+                              :disabled="isDisabled"
+                              :class="{'is-invalid': errors.users}"
                               :close-on-select="true"
                               :show-labels="false"
                               :placeholder=" __('Select') ">
                             </multi-select>
-                            <div v-if="form.errors.has('users')" class="alert p-0 mt-1 alert-danger" role="alert">
-                              <strong>{{ form.errors.get('users') }}</strong>
+                            <div v-if="errors.users" class="alert p-0 mt-1 alert-danger" role="alert">
+                              <strong>{{ errors.users }}</strong>
                             </div>
                           </div>
                         </div>
@@ -115,14 +113,13 @@
                             <input id="image" type="file" @change="selectImage" name="avatar" class="hidden"/>
                           </label>
                         </div>
-                        <div v-if="form.errors.has('logo')" class="alert p-0 mt-1 alert-danger" role="alert">
-                          <strong>{{ form.errors.get('logo') }}</strong>
+                        <div v-if="errors.logo" class="alert p-0 mt-1 alert-danger" role="alert">
+                          <strong>{{ errors.logo }}</strong>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
                 <div class="col-12">
                   <button type="submit" class="btn btn-success m-auto"> <i class="feather icon-plus"></i> {{ editMode ? __('Update') : __('Create') }}</button>
                 </div>
@@ -138,7 +135,7 @@
 
 <script>
   export default {
-    props: ['form', 'account_types', 'money_formats', 'users', 'editMode'],
+    props: ['form', 'account_types', 'money_formats', 'users', 'editMode', 'isDisabled'],
     data() {
       return {
       }
@@ -151,35 +148,81 @@
           this.store();
         }
       },
+      checkAccountStatus: function (obj) {
+        if (obj.name === 'Join') {
+          this.isDisabled = false;
+        }
+      },
       store: async function () {
-        const {data} = await this.form.post('/api/accounts');
-        this.$swal({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000,
-          icon: 'success',
-          type: 'success',
-          title: 'Congratulations',
-          text: data.success,
+        let formData = new FormData;
+        formData.append('name', this.form.name);
+        formData.append('slugan', this.form.slugan);
+        formData.append('logo', this.form.logo);
+        const account_type_id = this.form.account_type !== null ?
+          this.form.account_type.id : '';
+        formData.append('account_type_id', account_type_id);
+
+        const money_format_id = this.form.money_format !== null ?
+          this.form.money_format.id : '';
+        formData.append('money_format_id', money_format_id);
+
+        const users = await this.form.users.map(function (user) {
+          return user.id;
         });
-        this.closeModal();
-        this.$emit('refreshPage');
+        formData.append('users', users);
+        if (!this.isDisabled && this.form.users.length === 0) {
+          this.showToast(this.__('User is required'), 'Oops...', 'error', 'error');
+        }
+        try {
+          const {data} = await axios.post('/api/accounts', formData);
+          this.showToast(data.success);
+          this.closeModal();
+          this.$emit('refreshPage');
+        }catch (error) {
+          this.fillErrors(error.response.data.errors);
+        }
       },
       update: async function () {
-        const {data} = await this.form.post(`/api/accounts/${this.form.id}`);
+        let formData = new FormData;
+        formData.append('name', this.form.name);
+        formData.append('slugan', this.form.slugan);
+        formData.append('logo', this.form.logo);
+        const account_type_id = this.form.account_type !== null ?
+          this.form.account_type.id : '';
+        formData.append('account_type_id', account_type_id);
+
+        const money_format_id = this.form.money_format !== null ?
+          this.form.money_format.id : '';
+        formData.append('money_format_id', money_format_id);
+
+        const users = await this.form.users.map(function (user) {
+          return user.id;
+        });
+        formData.append('users', users);
+        if (!this.isDisabled && this.form.users.length === 0) {
+          this.showToast(this.__('User is required'), 'Oops...', 'error', 'error');
+        }
+        try {
+          const {data} = await axios.post(`/api/accounts/${this.form.id}`, formData);
+          this.showToast(data.success);
+          this.closeModal();
+          this.$emit('refreshPage');
+        }catch (error) {
+          this.fillErrors(error.response.data.errors);
+        }
+
+      },
+      showToast: function (text, title = 'Congratulations', icon = 'success', type = 'success') {
         this.$swal({
           toast: true,
           position: 'top-end',
           showConfirmButton: false,
           timer: 3000,
-          icon: 'success',
-          type: 'success',
-          title: 'Congratulations',
-          text: data.success,
+          icon: icon,
+          type: type,
+          title: title,
+          text: text,
         });
-        this.closeModal();
-        this.$emit('refreshPage');
       },
       selectImage: function (e) {
         const file = e.target.files[0];
@@ -187,11 +230,10 @@
         this.form.logo = file;
       },
       closeModal: function () {
-        this.form.reset();
         $("#modal").modal('hide')
       }
     },
-    mounted() {
+    created() {
     },
   }
 </script>

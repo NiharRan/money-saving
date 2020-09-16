@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Str;
 
 class AccountRepository
 {
@@ -112,7 +111,6 @@ class AccountRepository
     $account->slugan = request()->slugan;
     $account->account_type_id = request()->account_type_id;
     $account->money_format_id = request()->money_format_id;
-
     $users = empty(request()->users) ? [] : explode(',', request()->users);
     $users[] = auth()->user()->id;
     if ($account->save()) {
