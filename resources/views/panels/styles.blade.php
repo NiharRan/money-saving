@@ -1,5 +1,5 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600">
-        <link rel="stylesheet" href="{{ asset('vendors/css/vendors.min.css') }}">
+        <link rel="stylesheet" href="/vendors/css/vendors.min.css">
         {{-- Vendor Styles --}}
         @yield('vendor-style')
         {{-- Theme Styles --}}
