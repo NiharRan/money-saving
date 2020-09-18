@@ -29,6 +29,11 @@ class UserRepository
     if (\request()->has('status')) {
       $users = $users->where('status', \request()->status);
     }
+
+    if (\request()->has('slug')) {
+      $users = $users->where('slug', \request()->slug);
+    }
+
     if (\request()->has('role')) {
       $role = \request()->role;
       $users = $users->whereHas('role', function ($q) use ($role) {

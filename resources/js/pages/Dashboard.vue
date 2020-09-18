@@ -64,54 +64,43 @@
                 <div class="card-header">
                   <h4 class="mb-0">{{ __('Recent Transactions') }}</h4>
                 </div>
-                <div class="card-content">
-                  <div class="table-responsive mt-1">
-                    <table class="table table-hover-animation mb-0">
-                      <thead>
-                      <tr>
-                        <th class="text-uppercase text-center">{{ __("Invoice") }}</th>
-                        <th class="text-uppercase">{{ __("Account") }}</th>
-                        <th class="text-uppercase">{{ __('Transaction Type') }}</th>
-                        <th class="text-uppercase text-right">{{ __('Amount') }}</th>
-                        <th class="text-uppercase text-center">{{ __("Status") }}</th>
-                        <th class="text-uppercase text-center">{{ __('Date') }}</th>
-                      </tr>
-                      </thead>
-
-                    </table>
-                  </div>
+                <div class="card-body">
+                  <data-table
+                    :data="data"
+                    :url="url"
+                    :columns="auth('is_admin') ? allColumns : columns"
+                    @on-table-props-changed="reloadTable"
+                    @loading="isLoading = true"
+                    @finished-loading="isLoading = false">
+                    <div slot="pagination" slot-scope="{ links = {}, meta = {} }">
+                      <nav class="row">
+                        <div class="col-md-6 text-left">
+                          <span>
+                              Showing {{ meta.from }} to {{ meta.to }} of {{ meta.total }} Entries
+                          </span>
+                        </div>
+                        <div class="col-md-6 text-right">
+                          <button
+                            :disabled="!links.prev"
+                            class="btn btn-primary btn-sm"
+                            @click="url = links.prev">
+                            {{ __('Prev') }}
+                          </button>
+                          <button
+                            :disabled="!links.next"
+                            class="btn btn-primary btn-sm ml-2"
+                            @click="url = links.next">
+                            {{ __('Next') }}
+                          </button>
+                        </div>
+                      </nav>
+                    </div>
+                  </data-table>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="mb-0">{{ __('Recent Transactions') }}</h4>
-                </div>
-                <div class="card-content">
-                  <div class="table-responsive mt-1">
-                    <table id="data-table" class="table table-bordered display responsive nowrap mb-0" style="width: 100%">
-                      <thead>
-                      <tr>
-                        <th class="text-uppercase text-center">{{ __("Invoice") }}</th>
-                        <th class="text-uppercase">{{ __('Account') }}</th>
-                        <th class="text-uppercase">{{ __('Member') }}</th>
-                        <th class="text-uppercase">{{ __('Transaction Type') }}</th>
-                        <th class="text-uppercase text-right">{{ __('Amount') }}</th>
-                        <th class="text-uppercase text-center">{{ __("Status") }}</th>
-                        <th class="text-uppercase text-center">{{ __('Date') }}</th>
-                      </tr>
-                      </thead>
-
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <!-- Dashboard end -->
       </section>
@@ -120,18 +109,141 @@
 </template>
 
 <script>
+    import ButtonGroup from "../components/ButtonGroup";
+    import ProfileColumn from "../components/ProfileColumn";
+    import Invoice from "../components/Invoice";
+
     export default {
       name: "Dashboard",
       data: function () {
           return {
-
+            url: '/api/transactions',
+            data: {},
+            tableProps: {
+              search: '',
+              length: 10,
+              column: 'id',
+              dir: 'desc'
+            },
+            columns: [
+              {
+                label: this.__('S.N.'),
+                name: 'id',
+                orderable: true,
+              },
+              {
+                label: this.__('Account'),
+                name: 'account',
+                columnName: 'accounts.name',
+                orderable: true,
+                event: "",
+                handler: this.actionHandler,
+                component: ProfileColumn,
+              },
+              {
+                label: this.__('Invoice'),
+                name: 'invoice',
+                orderable: true,
+                event: "",
+                handler: this.actionHandler,
+                component: Invoice,
+              },
+              {
+                label: this.__('Amount'),
+                name: 'amount',
+                orderable: true,
+              },
+              {
+                label: this.__('Transaction Type'),
+                name: 'transaction_type.name',
+                columnName: 'transaction_types.name',
+                orderable: true,
+              },
+              {
+                label: this.__('Date'),
+                name: 'trans_date',
+                orderable: true,
+              },
+              {
+                label: this.__('Action'),
+                orderable: false,
+                event: "click",
+                handler: this.actionHandler,
+                component: ButtonGroup,
+              },
+            ],
+            allColumns: [
+              {
+                label: this.__('S.N.'),
+                name: 'id',
+                orderable: true,
+              },
+              {
+                label: this.__('Invoice'),
+                name: 'invoice',
+                orderable: true,
+                event: "",
+                handler: this.actionHandler,
+                component: Invoice,
+              },
+              {
+                label: this.__('Member'),
+                name: 'user',
+                columnName: 'users.name',
+                orderable: true,
+                event: "",
+                handler: this.actionHandler,
+                component: ProfileColumn,
+              },
+              {
+                label: this.__('Amount'),
+                name: 'amount',
+                orderable: true,
+              },
+              {
+                label: this.__('Transaction Type'),
+                name: 'transaction_type.name',
+                columnName: 'transaction_types.name',
+                orderable: true,
+              },
+              {
+                label: this.__('Account'),
+                name: 'account',
+                columnName: 'accounts.name',
+                orderable: true,
+                event: "",
+                handler: this.actionHandler,
+                component: ProfileColumn,
+              },
+              {
+                label: this.__('Date'),
+                name: 'trans_date',
+                orderable: true,
+              },
+              {
+                label: this.__('Action'),
+                orderable: false,
+                event: "click",
+                handler: this.actionHandler,
+                component: ButtonGroup,
+              },
+            ],
+            isLoading: false,
           }
       },
       methods: {
-
+        reloadTable: function (tableProps) {
+          this.getData(this.url, tableProps);
+        },
+        getData: async function (url = this.url, options = this.tableProps) {
+          const {data} = await axios.get(url, {
+            params: options
+          });
+          this.data = data;
+        },
       },
       created() {
-        console.log('Hi')
+        this.getData(this.url, this.tableProps);
       },
     }
 </script>

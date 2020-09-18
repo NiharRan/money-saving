@@ -25,6 +25,8 @@ Vue.component('breadcrumb', require('./panels/Breadcrumb').default);
 Vue.component('customer-list', require('./pages/Customer/List').default);
 Vue.component('account-list', require('./pages/Account/List').default);
 Vue.component('dashboard-page', require('./pages/Dashboard').default);
+Vue.component('user-profile', require('./pages/User/Profile').default);
+Vue.component('account-profile', require('./pages/Account/Profile').default);
 
 
 const app = new Vue({

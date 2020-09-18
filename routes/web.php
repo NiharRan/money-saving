@@ -27,7 +27,7 @@ Route::middleware(['auth', 'lang'])->group(function () {
   Route::get('/dashboard', 'DashboardController@index');
 
   Route::get('/users', 'UserController@index')->name('users.index');
-  Route::get('profile/{slug}', 'UserProfileController@show')->name('users.profile');
+  Route::get('/profile/{slug}', 'UserProfileController@show')->name('users.profile');
 
   Route::get('/users/{slug}/transactions', 'UserTransactionController@create')->name('users.transactions.create');
   Route::get('/users/{userId}/transactions/{transactionId}', 'UserTransactionController@edit')->name('users.transactions.edit');
@@ -85,15 +85,19 @@ Route::middleware(['auth', 'lang'])->group(function () {
     Route::get('/money-formats/search', 'Settings\MoneyFormatController@search')->name('money-formats.search');
 
     Route::resource('users', 'UserController')->except(['create', 'edit', 'show']);
-    Route::get('/users/search', 'UserController@search')->name('users.search');
+    Route::get('/users/search', 'UserController@search');
+    Route::get('/users/profile/{slug}', 'UserProfileController@show');
     Route::get('/users/{userId}/accounts', 'UserAccountController@index')->name('users.accounts.index');
+    Route::get('/users/{slug}/transactions', 'UserProfileController@index');
 
-    Route::get('/users/{userId}/transactions', 'UserTransactionController@index')->name('users.transactions.index');
+    Route::get('/users/{userId}/transactions', 'UserTransactionController@search')->name('users.transactions.index');
     Route::post('/users/transactions', 'UserTransactionController@store')->name('users.transactions.store');
 
     Route::resource('accounts', 'AccountController')->except(['create', 'edit','show', 'update']);
-    Route::post('accounts/{accountId}', 'AccountController@update')->name('accounts.update');
-    Route::get('/accounts/search', 'AccountController@search')->name('accounts.search');
+    Route::post('accounts/{accountId}', 'AccountController@update');
+    Route::get('/accounts/search', 'AccountController@search');
+    Route::get('/accounts/profile/{slug}', 'AccountProfileController@show');
+    Route::get('/accounts/{slug}/transactions', 'AccountProfileController@index');
 
     Route::resource('customers', 'CustomerController')->except(['create', 'show', 'edit', 'update']);
     Route::post('customers/{customerId}', 'CustomerController@update')->name('customers.update');

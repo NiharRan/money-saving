@@ -4,7 +4,6 @@ namespace App;
 
 use App\Settings\Role;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -20,10 +19,10 @@ class User extends Authenticatable
         'blood_group_id', 'religion_id', 'role_id', 'nationality',
         'password', 'email_verified_at', 'status'
     ];
-  protected $dates = [
-    'created_at',
-    'updated_at',
-  ];
+    protected $dates = [
+      'created_at',
+      'updated_at',
+    ];
 
   protected $dataTableColumns = [
     'id' => [
@@ -189,6 +188,6 @@ class User extends Authenticatable
     }
 
     public  function transactions() {
-      return $this->hasMany("App\Transaction");
+      return $this->hasMany("App\Transaction", 'user_id', 'id');
     }
 }

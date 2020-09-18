@@ -24,12 +24,17 @@ class UserProfileController extends Controller
       $pageConfigs = [
         'pageHeader' => true
       ];
+      $config = [
+        'text' => __(''),
+        'vue' => true,
+      ];
       $breadcrumbs = [
-        ['link'=>"/",'name'=>"Home"],
+        ['link'=>"/",'name'=> __("Home")],
         ['name'=> $user->name],
       ];
     return view('/pages/users/profile', [
-        'breadcrumbs' => $breadcrumbs
+      'breadcrumbs' => $breadcrumbs,
+      'config' => $config,
       ])->with([
         'user' => $user,
         'transactionTypes' => $transactionTypes,

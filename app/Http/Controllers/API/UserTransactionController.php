@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TransactionRequest;
 use App\Repositories\TransactionRepository;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
 
 class UserTransactionController extends Controller
 {
@@ -18,19 +21,20 @@ class UserTransactionController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
+   * @param Request $request
+   * @param int $id
+   * @return DataTableCollectionResource
    */
-  public function index($id)
+  public function index(Request $request, int $id)
   {
-    return $this->transactionRepository->userTransactionsDataInTable($id);
+    return $this->transactionRepository->dataTable($request);
   }
 
   /**
    * Store a newly created resource in storage.
    *
    * @param  \App\Http\Requests\TransactionRequest  $request
-   * @return \Illuminate\Http\Response
+   * @return Response
    */
   public function store(TransactionRequest $request)
   {

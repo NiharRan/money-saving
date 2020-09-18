@@ -31,12 +31,13 @@ class AccountProfileController extends Controller
         ['link'=>"/",'name'=> __("Home")],
         ['name'=> $account->name],
       ];
+      $config = [
+        'text' => __(''),
+        'vue' => true,
+      ];
       return view('/pages/accounts/profile', [
-        'breadcrumbs' => $breadcrumbs
-      ])->with([
-        'account' => $account,
-        'transactionTypes' => $transactionTypes,
-        'users' => $users
+        'breadcrumbs' => $breadcrumbs,
+        'config' => $config,
       ]);
     }
 }

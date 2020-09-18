@@ -17,10 +17,12 @@ class TransactionController extends Controller
   /**
    * Display the specified resource.
    *
+   * @param Request $request
    * @return string
    */
-  public function index()
+  public function index(Request $request)
   {
-    return $this->transactionRepository->transactionsDataInTable();
+    $transactions = $this->transactionRepository->dataTable($request);
+    return response()->json($transactions);
   }
 }

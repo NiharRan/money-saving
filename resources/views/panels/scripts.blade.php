@@ -21,7 +21,15 @@
 <script>
   window._locale = '{{ app()->getLocale() }}';
   window._translations = {!! cache('translations') !!};
-  window.auth = {!! auth()->user() !!};
+
+  @if(auth()->check())
+    window.auth = {!! auth()->user() !!};
+    window.auth.role = {!! auth()->user()->role !!}
+  @else
+      window.auth = {};
+      window.auth.role = {};
+  @endif
+
   window.text = '{{ isset($config) ? $config['text'] : '' }}';
   @if(isset($config) && $config['vue'] === true && isset($breadcrumbs))
     window.breadcrumbs = @json($breadcrumbs)

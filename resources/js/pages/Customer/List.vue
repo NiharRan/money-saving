@@ -112,7 +112,6 @@
               {
                 label: this.__('Action'),
                 orderable: false,
-                editText: this.__('Edit'),
                 event: "click",
                 handler: this.actionHandler,
                 component: ButtonGroup,

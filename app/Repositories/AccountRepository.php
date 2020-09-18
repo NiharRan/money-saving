@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Account;
 use App\Settings\TransactionType;
+use App\Transaction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -134,26 +135,6 @@ class AccountRepository
     $img->save($path);
   }
 
-  /**
-   * @param Account $account
-   * @param null $user_id
-   * @return mixed
-   */
-  public function transactionsByType(Account $account, $user_id=null)
-    {
-      $transactionTypes = TransactionType::active()->orderBy('name', 'asc')->get();
-      foreach ($transactionTypes as $key => $transactionType) {
-        $query = DB::table('transactions')
-          ->where('account_id', '=', $account->id)
-          ->where('created_at', '>=', $account->created_at)
-          ->where('transaction_type_id', '=', $transactionType->id);
-        if ($user_id !==  null) {
-          $query = $query->where('user_id', '=', $user_id);
-        }
-        $transactionTypes[$key]->amount = $query->sum('amount');
-      }
-      return $transactionTypes;
-    }
 
   public function uploadImage(string $fileNameToStore, $request)
   {
@@ -170,4 +151,32 @@ class AccountRepository
     $this->createThumbnail($mediumThumbnailPath, 300, 185);
   }
 
+  public function users($accountId)
+  {
+    $users = $this->findById($accountId)->users;
+    if (\request()->has('status')) {
+      $users = $users->where('status', \request()->status);
+    }
+    return $users;
+  }
+  /**
+   * @param Account $account
+   * @param null $user_id
+   * @return mixed
+   */
+  public function transactionsByType($account, $user_id=null)
+  {
+    $transactionTypes = TransactionType::active()->orderBy('name', 'asc')->get();
+    foreach ($transactionTypes as $key => $transactionType) {
+      $query = DB::table('transactions')
+        ->where('account_id', '=', $account->id)
+        ->where('created_at', '>=', $account->created_at)
+        ->where('transaction_type_id', '=', $transactionType->id);
+      if ($user_id !==  null) {
+        $query = $query->where('user_id', '=', $user_id);
+      }
+      $transactionTypes[$key]->amount = $query->sum('amount');
+    }
+    return $transactionTypes;
+  }
 }
